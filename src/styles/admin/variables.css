@@ -1,0 +1,201 @@
+/* Yushan Admin CSS Variables */
+:root {
+  /* Colors - Primary Palette */
+  --primary-color: #1890ff;
+  --primary-hover: #40a9ff;
+  --primary-active: #096dd9;
+  --primary-light: #e6f7ff;
+  --primary-dark: #002766;
+
+  /* Colors - Secondary Palette */
+  --secondary-color: #722ed1;
+  --secondary-hover: #9254de;
+  --secondary-active: #531dab;
+  --secondary-light: #f9f0ff;
+
+  /* Colors - Status */
+  --success-color: #52c41a;
+  --success-hover: #73d13d;
+  --success-light: #f6ffed;
+  --success-dark: #389e0d;
+
+  --warning-color: #faad14;
+  --warning-hover: #ffc53d;
+  --warning-light: #fffbe6;
+  --warning-dark: #d48806;
+
+  --error-color: #ff4d4f;
+  --error-hover: #ff7875;
+  --error-light: #fff2f0;
+  --error-dark: #cf1322;
+
+  --info-color: #1890ff;
+  --info-hover: #40a9ff;
+  --info-light: #e6f7ff;
+  --info-dark: #096dd9;
+
+  /* Colors - Neutral */
+  --text-primary: #262626;
+  --text-secondary: #595959;
+  --text-tertiary: #8c8c8c;
+  --text-disabled: #bfbfbf;
+  --text-inverse: #ffffff;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f5f5f5;
+  --bg-disabled: #f5f5f5;
+  --bg-dark: #001529;
+
+  --border-primary: #d9d9d9;
+  --border-secondary: #f0f0f0;
+  --border-light: #fafafa;
+
+  /* Layout */
+  --sidebar-width: 256px;
+  --sidebar-collapsed-width: 80px;
+  --header-height: 64px;
+  --footer-height: 48px;
+  --content-padding: 24px;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+
+  /* Border Radius */
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03),
+    0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 1px 2px 0 rgba(0, 0, 0, 0.03),
+    0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-family-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo,
+    Courier, monospace;
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-sm: 1.2;
+  --line-height-md: 1.5;
+  --line-height-lg: 1.6;
+
+  /* Z-index */
+  --z-dropdown: 1050;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+
+  /* Transitions */
+  --transition-fast: 0.1s ease-in-out;
+  --transition-normal: 0.2s ease-in-out;
+  --transition-slow: 0.3s ease-in-out;
+
+  /* Table */
+  --table-header-bg: #fafafa;
+  --table-row-hover: #f5f5f5;
+  --table-border: #f0f0f0;
+
+  /* Form */
+  --input-border: #d9d9d9;
+  --input-border-hover: #40a9ff;
+  --input-border-focus: #1890ff;
+  --input-bg: #ffffff;
+  --input-bg-disabled: #f5f5f5;
+
+  /* Card */
+  --card-bg: #ffffff;
+  --card-border: #f0f0f0;
+  --card-radius: 8px;
+  --card-shadow: var(--shadow-sm);
+
+  /* Admin specific colors */
+  --admin-primary: #1890ff;
+  --admin-sidebar-bg: #001529;
+  --admin-sidebar-text: rgba(255, 255, 255, 0.65);
+  --admin-sidebar-text-active: #ffffff;
+  --admin-header-bg: #ffffff;
+  --admin-content-bg: #f0f2f5;
+
+  /* Status colors for badges */
+  --status-active: var(--success-color);
+  --status-inactive: var(--warning-color);
+  --status-suspended: var(--error-color);
+  --status-pending: var(--info-color);
+  --status-banned: #722ed1;
+
+  /* Data visualization */
+  --chart-blue: #1890ff;
+  --chart-green: #52c41a;
+  --chart-orange: #faad14;
+  --chart-red: #ff4d4f;
+  --chart-purple: #722ed1;
+  --chart-cyan: #13c2c2;
+  --chart-pink: #eb2f96;
+  --chart-lime: #a0d911;
+}
+
+/* Dark theme variables */
+[data-theme='dark'] {
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  --text-tertiary: rgba(255, 255, 255, 0.65);
+  --text-disabled: rgba(255, 255, 255, 0.45);
+
+  --bg-primary: #141414;
+  --bg-secondary: #1f1f1f;
+  --bg-tertiary: #262626;
+  --bg-disabled: #262626;
+
+  --border-primary: #434343;
+  --border-secondary: #303030;
+  --border-light: #262626;
+
+  --table-header-bg: #262626;
+  --table-row-hover: #262626;
+  --table-border: #303030;
+
+  --input-border: #434343;
+  --input-bg: #1f1f1f;
+  --input-bg-disabled: #262626;
+
+  --card-bg: #1f1f1f;
+  --card-border: #303030;
+
+  --admin-header-bg: #1f1f1f;
+  --admin-content-bg: #141414;
+}
+
+/* Responsive breakpoints - use as @media (max-width: 576px) */
+/* Mobile: max-width: 576px */
+/* Tablet: max-width: 768px */
+/* Desktop: max-width: 992px */
+/* Large: max-width: 1200px */

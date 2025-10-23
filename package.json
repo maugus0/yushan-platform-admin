@@ -1,0 +1,78 @@
+{
+  "name": "yushan-platform-admin",
+  "version": "0.1.0",
+  "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maugus0/yushan-platform-admin.git"
+  },
+  "homepage": "https://maugus0.github.io/yushan-platform-admin",
+  "proxy": "https://yushan-backend-staging.up.railway.app",
+  "dependencies": {
+    "@ant-design/icons": "^5.4.0",
+    "@testing-library/dom": "^10.4.1",
+    "antd": "^5.27.4",
+    "axios": "^1.12.2",
+    "dayjs": "^1.11.18",
+    "lodash": "^4.17.21",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "react-scripts": "^5.0.1",
+    "recharts": "^2.12.7",
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.5.5"
+  },
+  "scripts": {
+    "start": "NODE_OPTIONS='--no-deprecation' react-scripts start",
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build -b gh-pages -u \"github-actions <github-actions@github.com>\"",
+    "test": "react-scripts test",
+    "test:ci": "react-scripts test --watch=false --ci --coverage",
+    "lint": "eslint . --ext js,jsx",
+    "lint:fix": "eslint . --ext js,jsx --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "<rootDir>/src/__mocks__/axios.js"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "overrides": {
+    "nth-check": "^2.0.1",
+    "webpack-dev-server": "^4.15.1",
+    "postcss": "^8.4.31"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.6.1",
+    "babel-jest": "^30.2.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "gh-pages": "^6.3.0",
+    "prettier": "3.3.3",
+    "react-scripts": "5.0.1"
+  }
+}

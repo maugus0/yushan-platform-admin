@@ -1,0 +1,410 @@
+/* Mobile-specific styles for Yushan Admin */
+
+/* Mobile Table Responsive Styles */
+@media (max-width: 768px) {
+  /* Force tables to not be tables */
+  .mobile-responsive-table,
+  .mobile-responsive-table thead,
+  .mobile-responsive-table tbody,
+  .mobile-responsive-table th,
+  .mobile-responsive-table td,
+  .mobile-responsive-table tr {
+    display: block;
+  }
+
+  /* Hide table headers */
+  .mobile-responsive-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .mobile-responsive-table tr {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-responsive-table td {
+    border: none;
+    position: relative;
+    padding: 8px 0;
+    padding-left: 35%;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+
+  .mobile-responsive-table td:last-child {
+    border-bottom: none;
+  }
+
+  .mobile-responsive-table td:before {
+    content: attr(data-label) ': ';
+    position: absolute;
+    left: 0;
+    width: 30%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #666;
+    font-size: 12px;
+  }
+
+  /* Mobile Card Layout Alternative */
+  .mobile-card-layout {
+    display: block;
+    width: 100%;
+  }
+
+  .mobile-card-layout .ant-table-wrapper {
+    overflow: visible;
+  }
+
+  .mobile-card-layout .ant-table {
+    display: none;
+  }
+
+  .mobile-card-layout .mobile-cards-container {
+    display: block;
+  }
+
+  .mobile-card-item {
+    background: white;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .mobile-card-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: #262626;
+    margin-bottom: 4px;
+  }
+
+  .mobile-card-subtitle {
+    font-size: 13px;
+    color: #8c8c8c;
+  }
+
+  .mobile-card-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .mobile-card-body {
+    margin-bottom: 12px;
+  }
+
+  .mobile-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .mobile-card-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .mobile-card-label {
+    font-weight: 500;
+    color: #595959;
+    flex: 0 0 auto;
+    margin-right: 12px;
+  }
+
+  .mobile-card-value {
+    flex: 1;
+    text-align: right;
+    color: #262626;
+  }
+
+  /* Mobile Pagination */
+  .mobile-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+    gap: 12px;
+  }
+
+  .mobile-pagination-info {
+    font-size: 12px;
+    color: #8c8c8c;
+  }
+
+  /* Mobile Action Buttons */
+  .mobile-action-buttons {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .mobile-action-buttons .ant-btn {
+    flex: 1;
+    min-width: 0;
+    font-size: 11px;
+    padding: 4px 8px;
+    height: auto;
+  }
+
+  /* Mobile Filter Panel */
+  .mobile-filter-panel {
+    background: #fafafa;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .mobile-filter-row {
+    margin-bottom: 12px;
+  }
+
+  .mobile-filter-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .mobile-filter-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #595959;
+    margin-bottom: 4px;
+  }
+
+  /* Mobile Search Bar */
+  .mobile-search-bar {
+    margin-bottom: 16px;
+  }
+
+  .mobile-search-bar .ant-input-search {
+    width: 100%;
+  }
+
+  /* Mobile Modal Adjustments */
+  .mobile-modal-content {
+    height: 100vh;
+    max-height: none;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .mobile-modal-header {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 100;
+  }
+
+  .mobile-modal-body {
+    padding: 16px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  .mobile-modal-footer {
+    padding: 16px;
+    border-top: 1px solid #f0f0f0;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    z-index: 100;
+  }
+
+  /* Mobile Tab Navigation */
+  .mobile-tab-navigation {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .mobile-tab-navigation::-webkit-scrollbar {
+    height: 2px;
+  }
+
+  .mobile-tab-navigation::-webkit-scrollbar-thumb {
+    background: #d9d9d9;
+    border-radius: 1px;
+  }
+
+  .mobile-tab-button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 6px 12px;
+    height: auto;
+  }
+
+  /* Mobile Stats Grid */
+  .mobile-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .mobile-stat-card {
+    background: white;
+    border: 1px solid #f0f0f0;
+    border-radius: 6px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .mobile-stat-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: #262626;
+    margin-bottom: 4px;
+  }
+
+  .mobile-stat-label {
+    font-size: 11px;
+    color: #8c8c8c;
+  }
+
+  /* Mobile Form Improvements */
+  .mobile-form-item {
+    margin-bottom: 16px;
+  }
+
+  .mobile-form-label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .mobile-form-input {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .mobile-form-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .mobile-form-actions .ant-btn {
+    flex: 1;
+  }
+
+  /* Mobile Page Header */
+  .mobile-page-header {
+    padding: 16px 0;
+    margin-bottom: 16px;
+  }
+
+  .mobile-page-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .mobile-page-subtitle {
+    font-size: 13px;
+    color: #8c8c8c;
+    margin-bottom: 12px;
+  }
+
+  .mobile-page-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* Mobile Breadcrumb */
+  .mobile-breadcrumb {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .mobile-breadcrumb .ant-breadcrumb-link {
+    color: #8c8c8c;
+  }
+
+  /* Mobile Empty State */
+  .mobile-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .mobile-empty-state .ant-empty-description {
+    font-size: 13px;
+    color: #8c8c8c;
+  }
+
+  /* Mobile Loading Spinner */
+  .mobile-loading-spinner {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .mobile-loading-spinner .ant-spin-text {
+    font-size: 13px;
+    margin-top: 12px;
+  }
+}
+
+/* Small Mobile (phones in portrait) */
+@media (max-width: 480px) {
+  .mobile-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .mobile-card-actions {
+    width: 100%;
+  }
+
+  .mobile-action-buttons .ant-btn {
+    min-width: 60px;
+  }
+
+  .mobile-tab-navigation {
+    gap: 2px;
+  }
+
+  .mobile-tab-button {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+}
+
+/* Landscape phone adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .mobile-modal-content {
+    height: 100vh;
+  }
+
+  .mobile-modal-body {
+    max-height: calc(100vh - 100px);
+  }
+}

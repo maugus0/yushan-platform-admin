@@ -1,0 +1,610 @@
+/* Yushan Admin Modal Styles */
+
+/* Modal Container */
+.admin-modal .ant-modal {
+  top: 20px;
+}
+
+.admin-modal .ant-modal-content {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+}
+
+.admin-modal .ant-modal-header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-secondary);
+  padding: var(--spacing-lg);
+  margin: 0;
+}
+
+.admin-modal .ant-modal-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.admin-modal .ant-modal-close {
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.admin-modal .ant-modal-close:hover {
+  background: var(--error-color);
+  border-color: var(--error-color);
+  color: white;
+}
+
+.admin-modal .ant-modal-body {
+  padding: var(--spacing-lg);
+  background: var(--bg-primary);
+}
+
+.admin-modal .ant-modal-footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-secondary);
+  padding: var(--spacing-lg);
+  margin: 0;
+  text-align: right;
+}
+
+/* Modal Sizes */
+.admin-modal.small .ant-modal {
+  max-width: 400px;
+}
+
+.admin-modal.medium .ant-modal {
+  max-width: 600px;
+}
+
+.admin-modal.large .ant-modal {
+  max-width: 800px;
+}
+
+.admin-modal.extra-large .ant-modal {
+  max-width: 1200px;
+}
+
+.admin-modal.fullscreen .ant-modal {
+  max-width: calc(100vw - 32px);
+  height: calc(100vh - 32px);
+  top: 16px;
+}
+
+.admin-modal.fullscreen .ant-modal-body {
+  height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+/* Modal Header Variants */
+.admin-modal-header-icon {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.admin-modal-header-icon .modal-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-lg);
+  color: white;
+}
+
+.admin-modal-header-icon .modal-icon.primary {
+  background: var(--primary-color);
+}
+
+.admin-modal-header-icon .modal-icon.success {
+  background: var(--success-color);
+}
+
+.admin-modal-header-icon .modal-icon.warning {
+  background: var(--warning-color);
+}
+
+.admin-modal-header-icon .modal-icon.error {
+  background: var(--error-color);
+}
+
+.admin-modal-header-content h3 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.admin-modal-header-content p {
+  margin: var(--spacing-xs) 0 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+/* Modal Body Content */
+.admin-modal-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.admin-modal-section:last-child {
+  margin-bottom: 0;
+}
+
+.admin-modal-section-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.admin-modal-section-content {
+  color: var(--text-primary);
+}
+
+/* Form Styles in Modal */
+.admin-modal .ant-form-item {
+  margin-bottom: var(--spacing-md);
+}
+
+.admin-modal .ant-form-item-label > label {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.admin-modal .ant-form-item-required::before {
+  color: var(--error-color);
+}
+
+.admin-modal .ant-input,
+.admin-modal .ant-input-number,
+.admin-modal .ant-select-selector,
+.admin-modal .ant-picker {
+  border-radius: var(--radius-md);
+  border-color: var(--input-border);
+  transition: border-color var(--transition-fast);
+}
+
+.admin-modal .ant-input:hover,
+.admin-modal .ant-input-number:hover .ant-input-number-input,
+.admin-modal .ant-select:not(.ant-select-disabled):hover .ant-select-selector,
+.admin-modal .ant-picker:hover {
+  border-color: var(--input-border-hover);
+}
+
+.admin-modal .ant-input:focus,
+.admin-modal .ant-input-focused,
+.admin-modal .ant-input-number-focused .ant-input-number-input,
+.admin-modal .ant-select-focused .ant-select-selector,
+.admin-modal .ant-picker-focused {
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* Modal Actions */
+.admin-modal-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: flex-end;
+}
+
+.admin-modal-actions.left {
+  justify-content: flex-start;
+}
+
+.admin-modal-actions.center {
+  justify-content: center;
+}
+
+.admin-modal-actions.space-between {
+  justify-content: space-between;
+}
+
+/* Confirmation Modal */
+.admin-confirm-modal .ant-modal-body {
+  text-align: center;
+  padding: var(--spacing-xxl) var(--spacing-lg);
+}
+
+.admin-confirm-icon {
+  font-size: 48px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.admin-confirm-icon.warning {
+  color: var(--warning-color);
+}
+
+.admin-confirm-icon.error {
+  color: var(--error-color);
+}
+
+.admin-confirm-icon.info {
+  color: var(--info-color);
+}
+
+.admin-confirm-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.admin-confirm-description {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+  line-height: var(--line-height-lg);
+}
+
+.admin-confirm-details {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  text-align: left;
+}
+
+.admin-confirm-details-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.admin-confirm-details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-confirm-details-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: var(--font-size-sm);
+}
+
+.admin-confirm-details-list li:last-child {
+  border-bottom: none;
+}
+
+.admin-confirm-details-list .label {
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.admin-confirm-details-list .value {
+  color: var(--text-primary);
+}
+
+/* Modal Loading State */
+.admin-modal-loading {
+  position: relative;
+}
+
+.admin-modal-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.admin-modal-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+}
+
+/* Modal Tabs */
+.admin-modal .ant-tabs {
+  margin: calc(var(--spacing-lg) * -1);
+  margin-bottom: 0;
+}
+
+.admin-modal .ant-tabs-tab-btn {
+  font-weight: var(--font-weight-medium);
+}
+
+.admin-modal .ant-tabs-content-holder {
+  padding: var(--spacing-lg);
+}
+
+/* Modal Steps */
+.admin-modal .ant-steps {
+  margin-bottom: var(--spacing-lg);
+}
+
+.admin-modal .ant-steps-item-title {
+  font-weight: var(--font-weight-medium);
+}
+
+/* View Modal Specific */
+.admin-view-modal .modal-field {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+  gap: var(--spacing-md);
+}
+
+.admin-view-modal .modal-field-label {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.admin-view-modal .modal-field-value {
+  color: var(--text-primary);
+  flex: 1;
+  word-break: break-word;
+}
+
+.admin-view-modal .modal-field-value.empty {
+  color: var(--text-disabled);
+  font-style: italic;
+}
+
+/* Edit Modal Specific */
+.admin-edit-modal .ant-form-item-control-input {
+  min-height: auto;
+}
+
+.admin-edit-modal .form-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: flex-end;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-secondary);
+}
+
+/* Modal Backdrop */
+.admin-modal .ant-modal-mask {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+/* Modal Animation */
+.admin-modal .ant-modal {
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modal Footer Variants */
+.admin-modal-footer-info {
+  background: var(--info-light);
+  border-color: var(--info-color);
+  color: var(--info-dark);
+}
+
+.admin-modal-footer-warning {
+  background: var(--warning-light);
+  border-color: var(--warning-color);
+  color: var(--warning-dark);
+}
+
+.admin-modal-footer-error {
+  background: var(--error-light);
+  border-color: var(--error-color);
+  color: var(--error-dark);
+}
+
+.admin-modal-footer-message {
+  text-align: left;
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  border: 1px solid;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-modal .ant-modal {
+    max-width: calc(100vw - 32px);
+    margin: 16px;
+  }
+
+  .admin-modal .ant-modal-header,
+  .admin-modal .ant-modal-body,
+  .admin-modal .ant-modal-footer {
+    padding: var(--spacing-md);
+  }
+
+  .admin-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .admin-modal-actions .ant-btn {
+    width: 100%;
+    margin: 0;
+  }
+
+  .admin-confirm-modal .ant-modal-body {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .admin-view-modal .modal-field {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .admin-view-modal .modal-field-label {
+    min-width: auto;
+  }
+
+  /* Mobile ViewModal Specific */
+  .mobile-view-modal .ant-modal {
+    max-width: 95vw !important;
+    margin: 8px !important;
+  }
+
+  .mobile-view-modal .ant-modal-body {
+    padding: 12px !important;
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+  }
+
+  .mobile-view-modal .ant-descriptions {
+    font-size: 12px;
+  }
+
+  .mobile-view-modal .ant-descriptions-item-label {
+    width: 35% !important;
+    padding: 8px !important;
+    font-size: 12px !important;
+  }
+
+  .mobile-view-modal .ant-descriptions-item-content {
+    padding: 8px !important;
+    font-size: 12px !important;
+  }
+
+  .mobile-view-modal .ant-typography {
+    font-size: 12px !important;
+  }
+
+  .mobile-view-modal .ant-space {
+    gap: 4px !important;
+  }
+
+  .mobile-view-modal .ant-tag {
+    font-size: 10px !important;
+    padding: 2px 6px !important;
+  }
+
+  .mobile-view-modal .ant-divider-horizontal {
+    margin: 12px 0 !important;
+  }
+
+  .mobile-view-modal .ant-typography-title {
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .mobile-view-modal .ant-image {
+    max-width: 80px !important;
+    max-height: 80px !important;
+  }
+
+  .mobile-view-modal .ant-avatar {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+/* Dark Theme Adjustments */
+[data-theme='dark'] .admin-modal .ant-modal-content {
+  background: var(--bg-primary);
+}
+
+[data-theme='dark'] .admin-modal .ant-modal-header {
+  background: var(--bg-secondary);
+}
+
+[data-theme='dark'] .admin-modal .ant-modal-footer {
+  background: var(--bg-secondary);
+}
+
+/* Scrollable Modal Body */
+.admin-modal-scrollable .ant-modal-body {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: calc(var(--spacing-lg) + 8px);
+}
+
+.admin-modal-scrollable .ant-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.admin-modal-scrollable .ant-modal-body::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.admin-modal-scrollable .ant-modal-body::-webkit-scrollbar-thumb {
+  background: var(--border-primary);
+  border-radius: 4px;
+}
+
+.admin-modal-scrollable .ant-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Modal with Sidebar */
+.admin-modal-with-sidebar .ant-modal-body {
+  display: flex;
+  gap: var(--spacing-lg);
+  padding: 0;
+}
+
+.admin-modal-sidebar {
+  width: 200px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-secondary);
+  padding: var(--spacing-lg);
+  flex-shrink: 0;
+}
+
+.admin-modal-main-content {
+  flex: 1;
+  padding: var(--spacing-lg);
+}
+
+.admin-modal-sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-modal-sidebar-menu li {
+  margin-bottom: var(--spacing-sm);
+}
+
+.admin-modal-sidebar-menu a {
+  display: block;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.admin-modal-sidebar-menu a:hover,
+.admin-modal-sidebar-menu a.active {
+  background: var(--primary-light);
+  color: var(--primary-color);
+}

@@ -1,0 +1,569 @@
+/* Yushan Admin DataTable Styles */
+
+/* Table Container */
+.admin-datatable {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+/* Table Header */
+.admin-datatable-header {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-secondary);
+  background: var(--bg-secondary);
+}
+
+.admin-datatable-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.admin-datatable-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.admin-datatable-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin: var(--spacing-xs) 0 0 0;
+}
+
+.admin-datatable-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Filters */
+.admin-datatable-filters {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-secondary);
+  background: var(--bg-primary);
+}
+
+.admin-datatable-filters.collapsed {
+  display: none;
+}
+
+.admin-datatable-filters-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  align-items: end;
+}
+
+.admin-datatable-filter-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: flex-end;
+  margin-top: var(--spacing-md);
+}
+
+/* Search Bar */
+.admin-datatable-search {
+  position: relative;
+  max-width: 300px;
+}
+
+.admin-datatable-search .ant-input {
+  padding-left: 36px;
+}
+
+.admin-datatable-search .anticon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  z-index: 1;
+}
+
+/* Bulk Actions */
+.admin-datatable-bulk-actions {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--primary-light);
+  border-bottom: 1px solid var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: slideDown 0.3s ease-out;
+}
+
+.admin-datatable-bulk-actions-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.admin-datatable-bulk-actions-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.admin-datatable-selection-info {
+  font-size: var(--font-size-sm);
+  color: var(--primary-dark);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Table Styles */
+.admin-datatable .ant-table {
+  background: transparent;
+}
+
+.admin-datatable .ant-table-thead > tr > th {
+  background: var(--table-header-bg);
+  border-bottom: 2px solid var(--border-secondary);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  padding: var(--spacing-md) var(--spacing-lg);
+  position: relative;
+}
+
+.admin-datatable .ant-table-thead > tr > th::before {
+  display: none;
+}
+
+.admin-datatable .ant-table-tbody > tr > td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--table-border);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.admin-datatable .ant-table-tbody > tr:hover > td {
+  background: var(--table-row-hover);
+}
+
+.admin-datatable .ant-table-tbody > tr.ant-table-row-selected > td {
+  background: var(--primary-light);
+}
+
+.admin-datatable .ant-table-tbody > tr.ant-table-row-selected:hover > td {
+  background: var(--primary-light);
+}
+
+/* Column Sorter */
+.admin-datatable .ant-table-column-sorter {
+  color: var(--text-tertiary);
+  transition: color var(--transition-fast);
+}
+
+.admin-datatable .ant-table-column-sorter-up.active,
+.admin-datatable .ant-table-column-sorter-down.active {
+  color: var(--primary-color);
+}
+
+/* Table Pagination */
+.admin-datatable .ant-pagination {
+  padding: var(--spacing-lg);
+  text-align: right;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-secondary);
+  margin: 0;
+}
+
+.admin-datatable .ant-pagination-item {
+  border-color: var(--border-primary);
+  background: var(--bg-primary);
+}
+
+.admin-datatable .ant-pagination-item:hover {
+  border-color: var(--primary-color);
+}
+
+.admin-datatable .ant-pagination-item-active {
+  border-color: var(--primary-color);
+  background: var(--primary-color);
+}
+
+.admin-datatable .ant-pagination-item-active a {
+  color: white;
+}
+
+/* Status Badges */
+.admin-status-badge {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.admin-status-badge.active {
+  background: var(--success-light);
+  color: var(--success-dark);
+  border: 1px solid var(--success-color);
+}
+
+.admin-status-badge.inactive {
+  background: var(--warning-light);
+  color: var(--warning-dark);
+  border: 1px solid var(--warning-color);
+}
+
+.admin-status-badge.suspended {
+  background: var(--error-light);
+  color: var(--error-dark);
+  border: 1px solid var(--error-color);
+}
+
+.admin-status-badge.pending {
+  background: var(--info-light);
+  color: var(--info-dark);
+  border: 1px solid var(--info-color);
+}
+
+.admin-status-badge.banned {
+  background: #f9f0ff;
+  color: #531dab;
+  border: 1px solid #722ed1;
+}
+
+/* Action Buttons */
+.admin-table-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.admin-table-action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: var(--font-size-sm);
+}
+
+.admin-table-action-btn:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.admin-table-action-btn.danger:hover {
+  background: var(--error-color);
+  border-color: var(--error-color);
+}
+
+.admin-table-action-btn.warning:hover {
+  background: var(--warning-color);
+  border-color: var(--warning-color);
+}
+
+/* More Actions Dropdown */
+.admin-table-more-actions {
+  position: relative;
+}
+
+.admin-table-more-actions .ant-dropdown-trigger {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-primary);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.admin-table-more-actions .ant-dropdown-trigger:hover {
+  background: var(--bg-secondary);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+/* Column Selector */
+.admin-datatable-column-selector {
+  position: relative;
+}
+
+.admin-datatable-columns-panel {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-md);
+  min-width: 200px;
+}
+
+.admin-datatable-columns-panel-header {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.admin-datatable-column-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) 0;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.admin-datatable-column-item:hover {
+  color: var(--primary-color);
+}
+
+/* Export Button */
+.admin-datatable-export {
+  position: relative;
+}
+
+.admin-datatable-export-menu {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-xs);
+  min-width: 150px;
+}
+
+.admin-datatable-export-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  font-size: var(--font-size-sm);
+}
+
+.admin-datatable-export-item:hover {
+  background: var(--bg-secondary);
+}
+
+/* Loading State */
+.admin-datatable-loading {
+  position: relative;
+}
+
+.admin-datatable-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* Empty State */
+.admin-datatable-empty {
+  text-align: center;
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  color: var(--text-tertiary);
+}
+
+.admin-datatable-empty-icon {
+  font-size: 48px;
+  color: var(--text-disabled);
+  margin-bottom: var(--spacing-md);
+}
+
+.admin-datatable-empty-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.admin-datatable-empty-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Row Expansion */
+.admin-datatable .ant-table-expand-icon-th,
+.admin-datatable .ant-table-expand-icon-col {
+  width: 48px;
+}
+
+.admin-datatable .ant-table-row-expand-icon {
+  border: 1px solid var(--border-primary);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.admin-datatable .ant-table-row-expand-icon:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.admin-datatable .ant-table-expanded-row > td {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .admin-datatable-filters-row {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 992px) {
+  .admin-datatable-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  .admin-datatable-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .admin-datatable-filters-row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-datatable-bulk-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  .admin-datatable-bulk-actions-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-datatable-header,
+  .admin-datatable-filters {
+    padding: var(--spacing-md);
+  }
+
+  .admin-datatable .ant-table-thead > tr > th,
+  .admin-datatable .ant-table-tbody > tr > td {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .admin-datatable .ant-pagination {
+    padding: var(--spacing-md);
+    text-align: center;
+  }
+
+  .admin-table-actions {
+    gap: 4px;
+  }
+
+  .admin-table-action-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    height: auto;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.admin-datatable-row-enter {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.admin-datatable-row-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+
+.admin-datatable-row-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.admin-datatable-row-exit-active {
+  opacity: 0;
+  transform: translateX(20px);
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+
+/* Sticky Header */
+.admin-datatable-sticky .ant-table-thead > tr > th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Dense Mode */
+.admin-datatable.dense .ant-table-thead > tr > th,
+.admin-datatable.dense .ant-table-tbody > tr > td {
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.admin-datatable.dense .admin-datatable-header,
+.admin-datatable.dense .admin-datatable-filters {
+  padding: var(--spacing-md);
+}
+
+/* Custom Scrollbar */
+.admin-datatable .ant-table-body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.admin-datatable .ant-table-body::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.admin-datatable .ant-table-body::-webkit-scrollbar-thumb {
+  background: var(--border-primary);
+  border-radius: 4px;
+}
+
+.admin-datatable .ant-table-body::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
