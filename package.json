@@ -1,13 +1,13 @@
 {
-  "name": "yushan-admin",
+  "name": "yushan-platform-admin",
   "version": "0.1.0",
   "private": false,
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/maugus0/yushan-admin.git"
+    "url": "https://github.com/maugus0/yushan-platform-admin.git"
   },
-  "homepage": "https://maugus0.github.io/yushan-admin",
+  "homepage": "https://maugus0.github.io/yushan-platform-admin",
   "proxy": "https://yushan-backend-staging.up.railway.app",
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
