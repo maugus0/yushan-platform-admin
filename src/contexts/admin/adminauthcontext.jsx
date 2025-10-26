@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { message } from 'antd';
 import authService from '../../services/admin/authservice';
 
 const AdminAuthContext = createContext();
@@ -13,6 +12,12 @@ export const useAdminAuth = () => {
 };
 
 export const AdminAuthProvider = ({ children }) => {
+  // Use console as fallback message handler - simple and always works
+  const message = {
+    success: (msg) => console.log('✓', msg),
+    error: (msg) => console.error('✗', msg),
+  };
+
   const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -80,12 +85,11 @@ export const AdminAuthProvider = ({ children }) => {
           email: profileResponse.data.email,
           isAdmin: profileResponse.data.profile?.isAdmin,
           isAuthor: profileResponse.data.profile?.isAuthor,
-          level: profileResponse.data.profile?.level,
           status: profileResponse.data.status,
         };
         setAdmin(updatedAdmin);
         // Also update localStorage
-        localStorage.setItem('adminUser', JSON.stringify(updatedAdmin));
+        localStorage.setItem('admin_user', JSON.stringify(updatedAdmin));
       }
     } catch (error) {
       console.warn('Failed to refresh user profile:', error);

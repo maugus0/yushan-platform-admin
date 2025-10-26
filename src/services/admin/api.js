@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Base API configuration for Yushan Admin
 const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
+  process.env.REACT_APP_API_BASE_URL || 'https://yushan.duckdns.org/api/v1';
 
 // Create axios instance
 const api = axios.create({

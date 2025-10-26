@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // Configure axios with base URL and interceptors
-const API_BASE_URL = 'https://yushan-backend-staging.up.railway.app/api';
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || 'https://yushan.duckdns.org/api/v1';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,

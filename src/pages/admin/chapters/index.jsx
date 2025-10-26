@@ -125,9 +125,21 @@ const Chapters = () => {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await novelService.getAllNovels({ page: 0, size: 200 });
+        const resp = await novelService.getAllNovels({
+          page: 0,
+          size: 100,
+          sort: 'title',
+          order: 'asc',
+        });
         if (resp && resp.data) {
-          setNovels(resp.data);
+          // Filter out DRAFT novels and sort alphabetically by title
+          const filteredNovels = resp.data.filter(
+            (novel) => novel.status !== 'DRAFT' && novel.status !== 'draft'
+          );
+          const sortedNovels = [...filteredNovels].sort((a, b) =>
+            a.title.localeCompare(b.title)
+          );
+          setNovels(sortedNovels);
           // Do not select first novel by default
         }
       } catch (err) {

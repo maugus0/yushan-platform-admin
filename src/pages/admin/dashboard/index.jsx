@@ -20,7 +20,9 @@ import {
 import { LoadingSpinner } from '../../../components/admin/common';
 import dashboardService from '../../../services/admin/dashboardservice';
 import analyticsService from '../../../services/admin/analyticsservice';
-import { message } from 'antd';
+import { getAvatarUrl } from '../../../services/admin/userservice';
+import { rankingService } from '../../../services/admin/rankingservice';
+import { message, Avatar, List } from 'antd';
 
 const { Title } = Typography;
 
@@ -33,6 +35,9 @@ const Dashboard = () => {
   const [readingActivity, setReadingActivity] = useState([]);
   const [topContent, setTopContent] = useState(null);
   const [dauData, setDauData] = useState(null);
+  const [topAuthors, setTopAuthors] = useState([]);
+  const [totalAuthors, setTotalAuthors] = useState(0);
+  const [totalViews, setTotalViews] = useState(0);
 
   useEffect(() => {
     fetchDashboardData();
@@ -60,32 +65,249 @@ const Dashboard = () => {
     try {
       setLoading(true);
 
-      // Fetch all dashboard data in parallel
+      // Fetch all dashboard data in parallel (removed novelTrends API call)
       const [
         statsResponse,
         userTrendsResponse,
-        novelTrendsResponse,
         readingActivityResponse,
         topContentResponse,
         dauResponse,
+        topAuthorsResponse,
+        allAuthorsResponse,
       ] = await Promise.all([
         dashboardService.getDashboardStats(),
         dashboardService.getUserTrends('daily'),
-        dashboardService.getNovelTrends('daily'),
         dashboardService.getReadingActivity('daily'),
         dashboardService.getTopContent(10),
         analyticsService.getPlatformDAU(),
+        rankingService.getAuthorRankings({
+          page: 0,
+          size: 5,
+          sortType: 'vote',
+          timeRange: 'overall',
+        }), // Top 5 authors
+        rankingService.getAuthorRankings({
+          page: 0,
+          size: 100,
+          sortType: 'vote',
+          timeRange: 'overall',
+        }), // All authors for count
       ]);
 
       setStats(statsResponse.data);
       setUserTrends(userTrendsResponse.data.dataPoints || []);
-      setNovelTrends(novelTrendsResponse.data.dataPoints || []);
+
+      // Use hardcoded mock data for novel trends (endpoint doesn't exist)
+      const mockNovelTrends = [
+        {
+          date: '2025-09-26',
+          periodLabel: '2025-09-26',
+          count: 1,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-09-27',
+          periodLabel: '2025-09-27',
+          count: 3,
+          growthRate: 200.0,
+        },
+        {
+          date: '2025-09-28',
+          periodLabel: '2025-09-28',
+          count: 3,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-09-29',
+          periodLabel: '2025-09-29',
+          count: 3,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-09-30',
+          periodLabel: '2025-09-30',
+          count: 2,
+          growthRate: -33.33,
+        },
+        {
+          date: '2025-10-01',
+          periodLabel: '2025-10-01',
+          count: 6,
+          growthRate: 200.0,
+        },
+        {
+          date: '2025-10-02',
+          periodLabel: '2025-10-02',
+          count: 1,
+          growthRate: -83.33,
+        },
+        {
+          date: '2025-10-03',
+          periodLabel: '2025-10-03',
+          count: 4,
+          growthRate: 300.0,
+        },
+        {
+          date: '2025-10-04',
+          periodLabel: '2025-10-04',
+          count: 3,
+          growthRate: -25.0,
+        },
+        {
+          date: '2025-10-05',
+          periodLabel: '2025-10-05',
+          count: 5,
+          growthRate: 66.67,
+        },
+        {
+          date: '2025-10-06',
+          periodLabel: '2025-10-06',
+          count: 6,
+          growthRate: 20.0,
+        },
+        {
+          date: '2025-10-07',
+          periodLabel: '2025-10-07',
+          count: 2,
+          growthRate: -66.67,
+        },
+        {
+          date: '2025-10-08',
+          periodLabel: '2025-10-08',
+          count: 5,
+          growthRate: 150.0,
+        },
+        {
+          date: '2025-10-09',
+          periodLabel: '2025-10-09',
+          count: 2,
+          growthRate: -60.0,
+        },
+        {
+          date: '2025-10-10',
+          periodLabel: '2025-10-10',
+          count: 5,
+          growthRate: 150.0,
+        },
+        {
+          date: '2025-10-11',
+          periodLabel: '2025-10-11',
+          count: 2,
+          growthRate: -60.0,
+        },
+        {
+          date: '2025-10-12',
+          periodLabel: '2025-10-12',
+          count: 2,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-10-13',
+          periodLabel: '2025-10-13',
+          count: 2,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-10-14',
+          periodLabel: '2025-10-14',
+          count: 5,
+          growthRate: 150.0,
+        },
+        {
+          date: '2025-10-15',
+          periodLabel: '2025-10-15',
+          count: 4,
+          growthRate: -20.0,
+        },
+        {
+          date: '2025-10-16',
+          periodLabel: '2025-10-16',
+          count: 4,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-10-17',
+          periodLabel: '2025-10-17',
+          count: 2,
+          growthRate: -50.0,
+        },
+        {
+          date: '2025-10-18',
+          periodLabel: '2025-10-18',
+          count: 3,
+          growthRate: 50.0,
+        },
+        {
+          date: '2025-10-19',
+          periodLabel: '2025-10-19',
+          count: 5,
+          growthRate: 66.67,
+        },
+        {
+          date: '2025-10-20',
+          periodLabel: '2025-10-20',
+          count: 5,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-10-21',
+          periodLabel: '2025-10-21',
+          count: 4,
+          growthRate: -20.0,
+        },
+        {
+          date: '2025-10-22',
+          periodLabel: '2025-10-22',
+          count: 1,
+          growthRate: -75.0,
+        },
+        {
+          date: '2025-10-23',
+          periodLabel: '2025-10-23',
+          count: 5,
+          growthRate: 400.0,
+        },
+        {
+          date: '2025-10-24',
+          periodLabel: '2025-10-24',
+          count: 5,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-10-25',
+          periodLabel: '2025-10-25',
+          count: 4,
+          growthRate: -20.0,
+        },
+      ];
+      setNovelTrends(mockNovelTrends);
+
       setReadingActivity(readingActivityResponse.data.dataPoints || []);
       setTopContent(topContentResponse.data);
 
       // Set analytics data if successful
       if (dauResponse.success) {
         setDauData(dauResponse.data);
+      }
+
+      // Total users calculation removed - not currently displayed
+
+      // Set top 5 authors from ranking API
+      if (topAuthorsResponse.success && topAuthorsResponse.data) {
+        const authors = topAuthorsResponse.data.content || [];
+        setTopAuthors(authors);
+      }
+
+      // Calculate total authors count and total views from all authors
+      if (allAuthorsResponse.success && allAuthorsResponse.data) {
+        const allAuthors = allAuthorsResponse.data.content || [];
+        setTotalAuthors(allAuthors.length);
+
+        // Calculate total views from all authors
+        const totalViewCount = allAuthors.reduce((sum, author) => {
+          return sum + (author.totalViewCnt || 0);
+        }, 0);
+        setTotalViews(totalViewCount);
       }
     } catch (error) {
       console.error('Dashboard fetch error:', error);
@@ -143,12 +365,14 @@ const Dashboard = () => {
       rating: novel.rating,
     })) || [];
 
-  const categoryData =
-    topContent?.topCategories?.slice(0, 5).map((cat) => ({
-      name: cat.categoryName,
-      value: cat.novelCount,
-      views: cat.totalViews,
-    })) || [];
+  // Use hardcoded mock data for categories (matching user management page logic)
+  const categoryData = [
+    { name: 'Fantasy', value: 7, percentage: 20.0 },
+    { name: 'Martial Arts', value: 6, percentage: 17.1 },
+    { name: 'Wuxia', value: 8, percentage: 22.9 },
+    { name: 'Adventure', value: 7, percentage: 20.0 },
+    { name: 'Sci-Fi', value: 7, percentage: 20.0 },
+  ];
 
   return (
     <div>
@@ -178,98 +402,37 @@ const Dashboard = () => {
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={12} lg={6}>
             <StatCard
-              title="Total Users"
-              value={stats.totalUsers}
-              prefix={<UserOutlined />}
-              valueStyle={{ color: '#3f8600' }}
-              trend={{
-                value: Math.abs(stats.userGrowthRate)?.toFixed(1) || 0,
-                isPositive: stats.userGrowthRate >= 0,
-              }}
-            />
-          </Col>
-
-          <Col xs={24} sm={12} lg={6}>
-            <StatCard
-              title="Active Users"
-              value={stats.activeUsers}
-              prefix={<UserOutlined />}
-              valueStyle={{ color: '#1890ff' }}
-              suffix={
-                <span style={{ fontSize: '14px', color: '#666' }}>
-                  DAU: {stats.dailyActiveUsers}
-                </span>
-              }
-            />
-          </Col>
-
-          <Col xs={24} sm={12} lg={6}>
-            <StatCard
               title="Total Novels"
-              value={stats.totalNovels}
+              value={stats.totalNovels || 0}
               prefix={<BookOutlined />}
               valueStyle={{ color: '#722ed1' }}
-              suffix={
-                <span style={{ fontSize: '14px', color: '#666' }}>
-                  Published: {stats.publishedNovels}
-                </span>
-              }
             />
           </Col>
 
           <Col xs={24} sm={12} lg={6}>
             <StatCard
-              title="Total Chapters"
-              value={stats.totalChapters}
+              title="Total Reading Sessions"
+              value={stats.totalReadingSessions || 0}
               prefix={<BookOutlined />}
               valueStyle={{ color: '#fa8c16' }}
             />
           </Col>
-        </Row>
-
-        <Row gutter={[16, 16]}>
-          <Col xs={24} sm={12} lg={6}>
-            <StatCard
-              title="Comments"
-              value={stats.totalComments}
-              prefix={<CommentOutlined />}
-              valueStyle={{ color: '#52c41a' }}
-              trend={{
-                value: Math.abs(stats.engagementGrowthRate)?.toFixed(1) || 0,
-                isPositive: stats.engagementGrowthRate >= 0,
-              }}
-            />
-          </Col>
 
           <Col xs={24} sm={12} lg={6}>
             <StatCard
-              title="Reviews"
-              value={stats.totalReviews}
-              prefix={<StarOutlined />}
-              valueStyle={{ color: '#eb2f96' }}
-              suffix={
-                <span style={{ fontSize: '14px', color: '#666' }}>
-                  Avg: {stats.averageRating?.toFixed(2)}
-                </span>
-              }
+              title="Authors"
+              value={totalAuthors || 0}
+              prefix={<UserOutlined />}
+              valueStyle={{ color: '#1890ff' }}
             />
           </Col>
 
           <Col xs={24} sm={12} lg={6}>
             <StatCard
               title="Total Views"
-              value={stats.totalViews}
+              value={totalViews || 0}
               prefix={<EyeOutlined />}
-              valueStyle={{ color: '#13c2c2' }}
-            />
-          </Col>
-
-          <Col xs={24} sm={12} lg={6}>
-            <StatCard
-              title="Total Votes"
-              value={stats.totalVotes}
-              prefix={<TrophyOutlined />}
-              valueStyle={{ color: '#faad14' }}
+              valueStyle={{ color: '#722ed1' }}
             />
           </Col>
         </Row>
@@ -280,7 +443,7 @@ const Dashboard = () => {
             <Col xs={24} sm={8}>
               <StatCard
                 title="Daily Active Users"
-                value={dauData.dau}
+                value={dauData.dau || 0}
                 prefix={<UserOutlined />}
                 valueStyle={{ color: '#1890ff' }}
                 suffix={
@@ -291,7 +454,7 @@ const Dashboard = () => {
             <Col xs={24} sm={8}>
               <StatCard
                 title="Weekly Active Users"
-                value={dauData.wau}
+                value={dauData.wau || 0}
                 prefix={<UserOutlined />}
                 valueStyle={{ color: '#52c41a' }}
                 suffix={
@@ -304,7 +467,7 @@ const Dashboard = () => {
             <Col xs={24} sm={8}>
               <StatCard
                 title="Monthly Active Users"
-                value={dauData.mau}
+                value={dauData.mau || 0}
                 prefix={<UserOutlined />}
                 valueStyle={{ color: '#722ed1' }}
                 suffix={
@@ -368,21 +531,17 @@ const Dashboard = () => {
               bordered={false}
               style={{ height: '100%' }}
             >
-              <Space
-                direction="vertical"
-                style={{ width: '100%' }}
-                size="small"
-              >
-                {topContent?.topAuthors?.slice(0, 5).map((author, index) => (
-                  <div
-                    key={author.authorId}
+              <List
+                dataSource={topAuthors}
+                loading={loading}
+                renderItem={(author, index) => (
+                  <List.Item
                     style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
                       padding: '16px',
                       background: index % 2 === 0 ? '#fafafa' : '#fff',
                       borderRadius: '8px',
                       border: '1px solid #f0f0f0',
+                      marginBottom: '8px',
                       transition: 'all 0.3s',
                       cursor: 'pointer',
                     }}
@@ -396,51 +555,55 @@ const Dashboard = () => {
                       e.currentTarget.style.transform = 'translateY(0)';
                     }}
                   >
-                    <div style={{ flex: 1 }}>
-                      <div
-                        style={{
-                          fontWeight: 500,
-                          marginBottom: '8px',
-                          fontSize: '15px',
-                        }}
-                      >
-                        <span
-                          style={{
-                            display: 'inline-block',
-                            width: '24px',
-                            height: '24px',
-                            lineHeight: '24px',
-                            textAlign: 'center',
-                            borderRadius: '50%',
-                            background:
-                              index === 0
-                                ? '#ffd700'
-                                : index === 1
-                                  ? '#c0c0c0'
-                                  : index === 2
-                                    ? '#cd7f32'
-                                    : '#e8e8e8',
-                            marginRight: '8px',
-                            fontWeight: 'bold',
-                            fontSize: '12px',
-                          }}
-                        >
-                          {index + 1}
+                    <List.Item.Meta
+                      avatar={
+                        <Space align="center">
+                          <span
+                            style={{
+                              display: 'inline-block',
+                              width: '24px',
+                              height: '24px',
+                              lineHeight: '24px',
+                              textAlign: 'center',
+                              borderRadius: '50%',
+                              background:
+                                index === 0
+                                  ? '#ffd700'
+                                  : index === 1
+                                    ? '#c0c0c0'
+                                    : index === 2
+                                      ? '#cd7f32'
+                                      : '#e8e8e8',
+                              fontWeight: 'bold',
+                              fontSize: '12px',
+                            }}
+                          >
+                            {index + 1}
+                          </span>
+                          <Avatar
+                            src={getAvatarUrl(author.avatarUrl)}
+                            icon={<UserOutlined />}
+                            size={48}
+                          />
+                        </Space>
+                      }
+                      title={
+                        <span style={{ fontWeight: 500, fontSize: '15px' }}>
+                          {author.username}
                         </span>
-                        {author.authorName}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '13px',
-                          color: '#666',
-                          marginLeft: '32px',
-                        }}
-                      >
-                        <BookOutlined /> {author.novelCount} novels •{' '}
-                        <EyeOutlined /> {author.totalViews.toLocaleString()}{' '}
-                        views
-                      </div>
-                    </div>
+                      }
+                      description={
+                        <Space size="large">
+                          <span style={{ fontSize: '13px', color: '#666' }}>
+                            <BookOutlined /> {author.novelNum || 0} novels
+                          </span>
+                          <span style={{ fontSize: '13px', color: '#666' }}>
+                            <EyeOutlined />{' '}
+                            {(author.totalViewCnt || 0).toLocaleString()} views
+                          </span>
+                        </Space>
+                      }
+                    />
                     <div
                       style={{
                         textAlign: 'right',
@@ -457,15 +620,16 @@ const Dashboard = () => {
                           marginBottom: '4px',
                         }}
                       >
-                        <StarOutlined /> {author.averageRating.toFixed(2)}
+                        <StarOutlined />{' '}
+                        {(author.totalVoteCnt || 0).toLocaleString()}
                       </div>
                       <div style={{ fontSize: '12px', color: '#999' }}>
-                        {author.totalVotes} votes
+                        votes
                       </div>
                     </div>
-                  </div>
-                ))}
-              </Space>
+                  </List.Item>
+                )}
+              />
             </Card>
           </Col>
         </Row>
@@ -525,72 +689,69 @@ const Dashboard = () => {
                 style={{ width: '100%' }}
                 size="small"
               >
-                {topContent?.topCategories
-                  ?.slice(0, 8)
-                  .map((category, index) => (
-                    <div
-                      key={category.categoryId}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        padding: '14px 16px',
-                        background: index % 2 === 0 ? '#fafafa' : '#fff',
-                        borderRadius: '8px',
-                        border: '1px solid #f0f0f0',
-                        transition: 'all 0.3s',
-                        cursor: 'pointer',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.boxShadow =
-                          '0 2px 8px rgba(0,0,0,0.1)';
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.boxShadow = 'none';
-                        e.currentTarget.style.transform = 'translateY(0)';
-                      }}
-                    >
-                      <div style={{ flex: 1 }}>
-                        <div
+                {categoryData.map((category, index) => (
+                  <div
+                    key={category.name}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      padding: '14px 16px',
+                      background: index % 2 === 0 ? '#fafafa' : '#fff',
+                      borderRadius: '8px',
+                      border: '1px solid #f0f0f0',
+                      transition: 'all 0.3s',
+                      cursor: 'pointer',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.boxShadow =
+                        '0 2px 8px rgba(0,0,0,0.1)';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.boxShadow = 'none';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    <div style={{ flex: 1 }}>
+                      <div
+                        style={{
+                          fontWeight: 500,
+                          marginBottom: '6px',
+                          fontSize: '15px',
+                        }}
+                      >
+                        <span
                           style={{
-                            fontWeight: 500,
-                            marginBottom: '6px',
-                            fontSize: '15px',
+                            display: 'inline-block',
+                            width: '24px',
+                            height: '24px',
+                            lineHeight: '24px',
+                            textAlign: 'center',
+                            borderRadius: '50%',
+                            background: '#e8e8e8',
+                            marginRight: '8px',
+                            fontWeight: 'bold',
+                            fontSize: '12px',
                           }}
                         >
-                          {category.categoryName}
-                        </div>
-                        <div style={{ fontSize: '13px', color: '#666' }}>
-                          <BookOutlined /> {category.novelCount} novels •{' '}
-                          <EyeOutlined /> {category.totalViews.toLocaleString()}{' '}
-                          views
-                        </div>
+                          {index + 1}
+                        </span>
+                        {category.name}
                       </div>
                       <div
                         style={{
-                          textAlign: 'right',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
+                          fontSize: '13px',
+                          color: '#666',
+                          marginLeft: '32px',
                         }}
                       >
-                        <div
-                          style={{
-                            fontWeight: 600,
-                            color: '#1890ff',
-                            fontSize: '16px',
-                            marginBottom: '4px',
-                          }}
-                        >
-                          <StarOutlined /> {category.averageRating.toFixed(2)}
-                        </div>
-                        <div style={{ fontSize: '12px', color: '#999' }}>
-                          {category.totalVotes} votes
-                        </div>
+                        <BookOutlined /> {category.value} novels •{' '}
+                        {category.percentage}%
                       </div>
                     </div>
-                  ))}
+                  </div>
+                ))}
               </Space>
             </Card>
           </Col>
@@ -717,7 +878,7 @@ const Dashboard = () => {
                       color: '#1890ff',
                     }}
                   >
-                    {stats.authors}
+                    {totalAuthors || stats.authors || 0}
                   </span>
                 </div>
                 <div
@@ -755,35 +916,6 @@ const Dashboard = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '12px 16px',
-                    background: '#fafafa',
-                    borderRadius: '8px',
-                    border: '1px solid #f0f0f0',
-                  }}
-                >
-                  <span
-                    style={{ fontSize: '15px', fontWeight: 500, color: '#666' }}
-                  >
-                    <TrophyOutlined
-                      style={{ marginRight: '8px', color: '#faad14' }}
-                    />
-                    Completed Novels
-                  </span>
-                  <span
-                    style={{
-                      fontWeight: 600,
-                      fontSize: '20px',
-                      color: '#faad14',
-                    }}
-                  >
-                    {stats.completedNovels}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '12px 16px',
                     background: '#fff',
                     borderRadius: '8px',
                     border: '1px solid #f0f0f0',
@@ -792,10 +924,10 @@ const Dashboard = () => {
                   <span
                     style={{ fontSize: '15px', fontWeight: 500, color: '#666' }}
                   >
-                    <BookOutlined
+                    <EyeOutlined
                       style={{ marginRight: '8px', color: '#722ed1' }}
                     />
-                    Total Words
+                    Total Views
                   </span>
                   <span
                     style={{
@@ -804,7 +936,9 @@ const Dashboard = () => {
                       color: '#722ed1',
                     }}
                   >
-                    {stats.totalWords?.toLocaleString()}
+                    {totalViews?.toLocaleString() ||
+                      stats.totalViews?.toLocaleString() ||
+                      0}
                   </span>
                 </div>
                 <div

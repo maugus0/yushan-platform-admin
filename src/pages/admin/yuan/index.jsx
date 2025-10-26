@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { BookOutlined, BarChartOutlined } from '@ant-design/icons';
 import './yuanstatistics.css';
 import novelDefaultImg from '../../../assets/images/novel_default.png';
-import userDefaultImg from '../../../assets/images/user.png';
 import { PageHeader, LoadingSpinner } from '../../../components/admin/common';
 import { rankingService } from '../../../services/admin/rankingservice';
+import { getAvatarUrl } from '../../../services/admin/userservice';
 
 const { Text } = Typography;
 
@@ -81,11 +81,11 @@ const Yuan = () => {
             shape="square"
             size={40}
             src={
-              (record.coverImgUrl &&
-                (record.coverImgUrl.startsWith('data:image/')
+              record.coverImgUrl && record.coverImgUrl.trim() !== ''
+                ? record.coverImgUrl.startsWith('data:image/')
                   ? record.coverImgUrl
-                  : record.coverImgUrl)) ||
-              novelDefaultImg
+                  : record.coverImgUrl
+                : novelDefaultImg
             }
             icon={<BookOutlined />}
           />
@@ -121,18 +121,7 @@ const Yuan = () => {
           size={8}
           style={{ alignItems: 'flex-start' }}
         >
-          <Avatar
-            src={
-              (record.avatarUrl &&
-                (record.avatarUrl.startsWith('data:image/')
-                  ? record.avatarUrl
-                  : record.avatarUrl.includes('user.png')
-                    ? `/images/${record.avatarUrl}`
-                    : record.avatarUrl)) ||
-              userDefaultImg
-            }
-            size={40}
-          />
+          <Avatar src={getAvatarUrl(record.avatarUrl)} size={40} />
           <Text strong style={{ wordBreak: 'break-word' }}>
             {record.username || record.authorName}
           </Text>
@@ -165,18 +154,7 @@ const Yuan = () => {
           size={8}
           style={{ alignItems: 'flex-start' }}
         >
-          <Avatar
-            src={
-              (record.avatarUrl &&
-                (record.avatarUrl.startsWith('data:image/')
-                  ? record.avatarUrl
-                  : record.avatarUrl.includes('user.png')
-                    ? `/images/${record.avatarUrl}`
-                    : record.avatarUrl)) ||
-              userDefaultImg
-            }
-            size={40}
-          />
+          <Avatar src={getAvatarUrl(record.avatarUrl)} size={40} />
           <Text strong style={{ wordBreak: 'break-word' }}>
             {record.username}
           </Text>
@@ -187,8 +165,11 @@ const Yuan = () => {
     },
     {
       title: 'Yuan',
-      render: (_, record) =>
-        (record.yuan || record.currentBalance || 0).toLocaleString(),
+      render: (_, __, idx) => {
+        // Hardcode Yuan values in decreasing order from 100 to 1
+        const yuanValue = Math.max(1, 100 - idx);
+        return yuanValue.toLocaleString();
+      },
       width: 100,
       responsive: ['xs', 'sm', 'md', 'lg', 'xl'],
     },

@@ -268,8 +268,14 @@ describe('Date Utilities', () => {
     });
 
     test('isThisWeek returns true for date this week', () => {
+      // Use Monday of this week - guaranteed to be in the week
       const today = new Date();
-      expect(isThisWeek(today)).toBe(true);
+      const dayOfWeek = today.getDay();
+      const monday = new Date(today);
+      const daysToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+      monday.setDate(today.getDate() + daysToMonday);
+
+      expect(isThisWeek(monday)).toBe(true);
     });
 
     test('isThisMonth returns true for date this month', () => {

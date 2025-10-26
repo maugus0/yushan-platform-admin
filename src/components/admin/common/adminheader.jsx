@@ -19,6 +19,7 @@ import {
   FullscreenExitOutlined,
 } from '@ant-design/icons';
 import { useAdminAuth } from '../../../contexts/admin/adminauthcontext';
+import { getAvatarUrl } from '../../../services/admin/userservice';
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -27,11 +28,11 @@ const AdminHeader = ({
   collapsed = false,
   onToggleCollapsed,
   showSearch = false,
+  onSearch,
   showNotifications = true,
   showFullscreen = false,
   showUserMenu = true,
   notifications = [],
-  onSearch,
   onNotificationClick,
   onUserMenuClick,
   style = {},
@@ -39,7 +40,7 @@ const AdminHeader = ({
   extra,
   isMobile = false,
   _unreadCount,
-  ...props
+  ..._props
 }) => {
   const { admin, logout } = useAdminAuth();
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -122,7 +123,6 @@ const AdminHeader = ({
         ...style,
       }}
       className={className}
-      {...props}
     >
       {/* Left Section */}
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -206,8 +206,8 @@ const AdminHeader = ({
             >
               <Avatar
                 size="small"
-                src={admin.avatar}
-                icon={!admin.avatar && <UserOutlined />}
+                src={getAvatarUrl(admin.avatar || admin.avatarUrl)}
+                icon={!admin.avatar && !admin.avatarUrl && <UserOutlined />}
                 style={{ backgroundColor: '#1890ff' }}
               />
               {!isMobile && (

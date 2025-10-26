@@ -8,13 +8,13 @@
     "url": "https://github.com/maugus0/yushan-platform-admin.git"
   },
   "homepage": "https://maugus0.github.io/yushan-platform-admin",
-  "proxy": "https://yushan-backend-staging.up.railway.app",
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
     "@testing-library/dom": "^10.4.1",
     "antd": "^5.27.4",
     "axios": "^1.12.2",
     "dayjs": "^1.11.18",
+    "http-proxy-middleware": "^2.0.6",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -22,6 +22,7 @@
     "react-scripts": "^5.0.1",
     "recharts": "^2.12.7",
     "web-vitals": "^2.1.4",
+    "yaml": "^2.8.1",
     "zustand": "^4.5.5"
   },
   "scripts": {

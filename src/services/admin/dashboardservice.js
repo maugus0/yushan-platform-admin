@@ -1,16 +1,13 @@
 import api from './api';
 
-const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL ||
-  'https://yushan-backend-staging.up.railway.app/api';
+// Note: Mock data for novel trends is now hardcoded directly in components
+// since the endpoint no longer exists
 
 export const dashboardService = {
   // Get main dashboard statistics from platform overview
   getDashboardStats: async () => {
     try {
-      const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/platform/overview`
-      );
+      const response = await api.get('/admin/analytics/platform/overview');
 
       if (response.data.code === 200) {
         const data = response.data.data;
@@ -18,37 +15,35 @@ export const dashboardService = {
         return {
           success: true,
           data: {
-            // User statistics
-            totalUsers: data.totalUsers,
-            newUsersToday: data.newUsersToday,
-            activeUsers: data.activeUsers,
-            authors: data.authors,
-            admins: data.admins,
+            // User statistics - from new response structure
+            dailyActiveUsers: data.dailyActiveUsers || 0,
+            weeklyActiveUsers: data.weeklyActiveUsers || 0,
+            monthlyActiveUsers: data.monthlyActiveUsers || 0,
 
             // Content statistics
-            totalNovels: data.totalNovels,
-            publishedNovels: data.publishedNovels,
-            completedNovels: data.completedNovels,
-
-            totalChapters: data.totalChapters,
-            totalWords: data.totalWords,
+            totalNovels: data.totalNovels || 0,
 
             // Engagement statistics
-            totalViews: data.totalViews,
-            totalComments: data.totalComments,
-            totalReviews: data.totalReviews,
-            totalVotes: data.totalVotes,
-            averageRating: data.averageRating,
+            totalReadingSessions: data.totalReadingSessions || 0,
+            totalComments: data.totalComments || 0,
+            totalReviews: data.totalReviews || 0,
 
-            // Growth rates
-            userGrowthRate: data.userGrowthRate,
-            contentGrowthRate: data.contentGrowthRate,
-            engagementGrowthRate: data.engagementGrowthRate,
-
-            // Activity metrics
-            dailyActiveUsers: data.dailyActiveUsers,
-            weeklyActiveUsers: data.weeklyActiveUsers,
-            monthlyActiveUsers: data.monthlyActiveUsers,
+            // Fallback for old fields that might not exist
+            totalUsers: data.totalUsers || 0,
+            newUsersToday: data.newUsersToday || 0,
+            activeUsers: data.activeUsers || data.dailyActiveUsers || 0,
+            authors: data.authors || 0,
+            admins: data.admins || 0,
+            publishedNovels: data.publishedNovels || data.totalNovels || 0,
+            completedNovels: data.completedNovels || 0,
+            totalChapters: data.totalChapters || 0,
+            totalWords: data.totalWords || 0,
+            totalViews: data.totalViews || 0,
+            totalVotes: data.totalVotes || 0,
+            averageRating: data.averageRating || 0,
+            userGrowthRate: data.userGrowthRate || 0,
+            contentGrowthRate: data.contentGrowthRate || 0,
+            engagementGrowthRate: data.engagementGrowthRate || 0,
 
             // Last updated
             lastUpdated: data.timestamp,
@@ -79,12 +74,9 @@ export const dashboardService = {
   // Get analytics summary
   getAnalyticsSummary: async (period = 'daily') => {
     try {
-      const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/summary`,
-        {
-          params: { period },
-        }
-      );
+      const response = await api.get('/admin/analytics/summary', {
+        params: { period },
+      });
 
       if (response.data.code === 200) {
         return {
@@ -109,12 +101,9 @@ export const dashboardService = {
       if (startDate) params.startDate = startDate;
       if (endDate) params.endDate = endDate;
 
-      const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/users/trends`,
-        {
-          params,
-        }
-      );
+      const response = await api.get('/admin/analytics/users/trends', {
+        params,
+      });
 
       if (response.data.code === 200) {
         return {
@@ -130,43 +119,8 @@ export const dashboardService = {
     }
   },
 
-  // Get novel trends
-  getNovelTrends: async (
-    period = 'daily',
-    startDate = null,
-    endDate = null,
-    categoryId = null,
-    authorId = null,
-    status = null
-  ) => {
-    try {
-      const params = { period };
-      if (startDate) params.startDate = startDate;
-      if (endDate) params.endDate = endDate;
-      if (categoryId) params.categoryId = categoryId;
-      if (authorId) params.authorId = authorId;
-      if (status !== null) params.status = status;
-
-      const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/novels/trends`,
-        {
-          params,
-        }
-      );
-
-      if (response.data.code === 200) {
-        return {
-          success: true,
-          data: response.data.data,
-        };
-      }
-
-      throw new Error(response.data.message || 'Failed to fetch novel trends');
-    } catch (error) {
-      console.error('Novel trends error:', error);
-      throw new Error(error.message || 'Failed to fetch novel trends');
-    }
-  },
+  // Note: getNovelTrends removed - endpoint doesn't exist
+  // Dashboard uses hardcoded mock data instead
 
   // Get reading activity
   getReadingActivity: async (
@@ -179,12 +133,9 @@ export const dashboardService = {
       if (startDate) params.startDate = startDate;
       if (endDate) params.endDate = endDate;
 
-      const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/reading/activity`,
-        {
-          params,
-        }
-      );
+      const response = await api.get('/admin/analytics/reading/activity', {
+        params,
+      });
 
       if (response.data.code === 200) {
         return {
@@ -205,12 +156,9 @@ export const dashboardService = {
   // Get top content
   getTopContent: async (limit = 10) => {
     try {
-      const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/platform/top-content`,
-        {
-          params: { limit },
-        }
-      );
+      const response = await api.get('/admin/analytics/platform/top-content', {
+        params: { limit },
+      });
 
       if (response.data.code === 200) {
         return {
@@ -233,12 +181,9 @@ export const dashboardService = {
       if (date) params.date = date;
       else params.date = new Date().toISOString().split('T')[0];
 
-      const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/platform/dau`,
-        {
-          params,
-        }
-      );
+      const response = await api.get('/admin/analytics/platform/dau', {
+        params,
+      });
 
       if (response.data.code === 200) {
         return {

@@ -1,17 +1,10 @@
 import { render, screen, waitFor, act } from '@testing-library/react';
-import { message } from 'antd';
 import { AdminAuthProvider, useAdminAuth } from './adminauthcontext';
 import authService from '../../services/admin/authservice';
 
 // Mock dependencies
 jest.mock('../../services/admin/authservice');
 jest.mock('../../services/admin/userservice');
-jest.mock('antd', () => ({
-  message: {
-    success: jest.fn(),
-    error: jest.fn(),
-  },
-}));
 
 // Mock localStorage
 const localStorageMock = {
@@ -201,7 +194,6 @@ describe('AdminAuthContext', () => {
           username: 'test',
           password: 'pass',
         });
-        expect(message.success).toHaveBeenCalledWith('Login successful!');
         expect(screen.getByTestId('admin')).toHaveTextContent(
           JSON.stringify(mockUser)
         );
@@ -237,7 +229,6 @@ describe('AdminAuthContext', () => {
           username: 'test',
           password: 'pass',
         });
-        expect(message.error).toHaveBeenCalledWith('Invalid credentials');
         expect(screen.getByTestId('admin')).toHaveTextContent('null');
         expect(screen.getByTestId('isAuthenticated')).toHaveTextContent(
           'false'
@@ -246,9 +237,7 @@ describe('AdminAuthContext', () => {
     });
 
     test('login with unsuccessful response', async () => {
-      const mockLogin = jest.fn().mockResolvedValue({
-        success: false,
-      });
+      const mockLogin = jest.fn().mockResolvedValue({ success: false });
 
       authService.login = mockLogin;
 
@@ -273,7 +262,7 @@ describe('AdminAuthContext', () => {
           username: 'test',
           password: 'pass',
         });
-        expect(message.error).toHaveBeenCalledWith('Login failed');
+        expect(screen.getByTestId('admin')).toHaveTextContent('null');
       });
     });
   });
@@ -365,7 +354,6 @@ describe('AdminAuthContext', () => {
         expect(updatedAdmin.email).toBe('admin@example.com');
         expect(updatedAdmin.isAdmin).toBe(true);
         expect(updatedAdmin.isAuthor).toBe(true);
-        expect(updatedAdmin.level).toBe(5);
         expect(updatedAdmin.status).toBe('active');
       });
     });

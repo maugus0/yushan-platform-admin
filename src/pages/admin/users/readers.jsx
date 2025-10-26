@@ -11,7 +11,7 @@ import DataTable from '../../../components/admin/tables/datatable';
 import TableFilters from '../../../components/admin/tables/tablefilters';
 
 // Import services and common components
-import { userService } from '../../../services/admin/userservice';
+import { userService, getAvatarUrl } from '../../../services/admin/userservice';
 import PageHeader from '../../../components/admin/common/pageheader';
 import StatusBadge from '../../../components/admin/common/statusbadge';
 import Breadcrumbs from '../../../components/admin/common/breadcrumbs';
@@ -150,7 +150,11 @@ const Readers = () => {
       key: 'username',
       render: (text, record) => (
         <Space>
-          <Avatar src={record.avatar} icon={<UserOutlined />} size="default" />
+          <Avatar
+            src={getAvatarUrl(record.avatarUrl)}
+            icon={<UserOutlined />}
+            size="default"
+          />
           <div>
             <div style={{ fontWeight: 500 }}>{text}</div>
             <div style={{ fontSize: '12px', color: '#666' }}>

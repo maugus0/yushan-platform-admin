@@ -1,13 +1,8 @@
 import axios from 'axios';
 
 // Configure axios with base URL and interceptors
-// In development, this will use the proxy configured in package.json
-// In production, it will use the full URL
-const isDevelopment =
-  !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
-const API_BASE_URL = isDevelopment
-  ? '/api'
-  : 'https://yushan-backend-staging.up.railway.app/api';
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || 'https://yushan.duckdns.org/api/v1';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
