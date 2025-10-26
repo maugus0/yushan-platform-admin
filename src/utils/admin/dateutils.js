@@ -136,8 +136,11 @@ export const getDateRange = (period) => {
       const day = today.getDay();
       const daysToMonday = day === 0 ? -6 : 1 - day;
       startOfWeek.setDate(today.getDate() + daysToMonday);
+      startOfWeek.setHours(0, 0, 0, 0);
+
       const endOfWeek = new Date(startOfWeek);
       endOfWeek.setDate(startOfWeek.getDate() + 6);
+      endOfWeek.setHours(23, 59, 59, 999);
       return [startOfWeek, endOfWeek];
     }
 
