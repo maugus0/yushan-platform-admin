@@ -85,7 +85,7 @@ const authService = {
         localStorage.setItem('accessToken', userData.accessToken);
         localStorage.setItem('refreshToken', userData.refreshToken);
         localStorage.setItem('tokenType', userData.tokenType);
-        
+
         // Store user info (excluding sensitive data)
         const adminUser = {
           uuid: userData.uuid,
@@ -186,7 +186,7 @@ const authService = {
         // Update stored tokens
         localStorage.setItem('accessToken', tokenData.accessToken);
         localStorage.setItem('refreshToken', tokenData.refreshToken);
-        
+
         // Set up next refresh
         authService.setupTokenRefresh(tokenData.expiresIn);
 

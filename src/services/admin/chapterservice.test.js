@@ -72,7 +72,7 @@ describe('chapterService', () => {
       // verify fetch call URL and headers
       const [url, opts] = globalThis.fetch.mock.calls[0];
       expect(url).toBe(
-        'https://yushan-backend-staging.up.railway.app/api/chapters/novel/nov-1?page=2&pageSize=5&publishedOnly=false'
+        'https://yushan.duckdns.org/api/v1/chapters/novel/nov-1?page=2&pageSize=5&publishedOnly=false'
       );
       expect(opts.method).toBe('GET');
       expect(opts.headers.accept).toBe('*/*');
@@ -97,7 +97,7 @@ describe('chapterService', () => {
 
       const [url] = globalThis.fetch.mock.calls[0];
       expect(url).toBe(
-        'https://yushan-backend-staging.up.railway.app/api/chapters/novel/nov-2?page=1&pageSize=20&publishedOnly=true'
+        'https://yushan.duckdns.org/api/v1/chapters/novel/nov-2?page=1&pageSize=20&publishedOnly=true'
       );
     });
 
@@ -130,7 +130,7 @@ describe('chapterService', () => {
 
       const [url, opts] = globalThis.fetch.mock.calls[0];
       expect(url).toBe(
-        'https://yushan-backend-staging.up.railway.app/api/chapters/admin/uuid-9'
+        'https://yushan.duckdns.org/api/v1/chapters/admin/uuid-9'
       );
       expect(opts.method).toBe('DELETE');
       expect(opts.headers.Authorization).toBe('Bearer tok-xyz');
@@ -166,7 +166,7 @@ describe('chapterService', () => {
 
       const [url, opts] = globalThis.fetch.mock.calls[0];
       expect(url).toBe(
-        'https://yushan-backend-staging.up.railway.app/api/chapters/admin/novel/nov-7'
+        'https://yushan.duckdns.org/api/v1/chapters/admin/novel/nov-7'
       );
       expect(opts.method).toBe('DELETE');
       expect(opts.headers.Authorization).toBe('Bearer tok-xyz');

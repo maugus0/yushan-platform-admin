@@ -7,8 +7,7 @@ const getAuthToken = () => {
 // Get API base URL from environment or use default
 const getApiBaseUrl = () => {
   return (
-    process.env.REACT_APP_API_BASE_URL ||
-    'https://yushan.duckdns.org/api/v1'
+    process.env.REACT_APP_API_BASE_URL || 'https://yushan.duckdns.org/api/v1'
   );
 };
 

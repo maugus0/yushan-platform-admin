@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { App } from 'antd';
 import authService from '../../services/admin/authservice';
 
 const AdminAuthContext = createContext();
@@ -13,7 +12,12 @@ export const useAdminAuth = () => {
 };
 
 export const AdminAuthProvider = ({ children }) => {
-  const { message } = App.useApp();
+  // Use console as fallback message handler - simple and always works
+  const message = {
+    success: (msg) => console.log('✓', msg),
+    error: (msg) => console.error('✗', msg),
+  };
+
   const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
 

@@ -1,6 +1,8 @@
+// eslint-disable-next-line no-undef
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function(app) {
+// eslint-disable-next-line no-undef
+module.exports = function (app) {
   // Proxy for local development to bypass CORS issues
   app.use(
     '/api/v1',

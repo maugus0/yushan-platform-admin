@@ -73,12 +73,9 @@ export const dashboardService = {
   // Get analytics summary
   getAnalyticsSummary: async (period = 'daily') => {
     try {
-      const response = await api.get(
-        '/admin/analytics/summary',
-        {
-          params: { period },
-        }
-      );
+      const response = await api.get('/admin/analytics/summary', {
+        params: { period },
+      });
 
       if (response.data.code === 200) {
         return {
@@ -103,12 +100,9 @@ export const dashboardService = {
       if (startDate) params.startDate = startDate;
       if (endDate) params.endDate = endDate;
 
-      const response = await api.get(
-        '/admin/analytics/users/trends',
-        {
-          params,
-        }
-      );
+      const response = await api.get('/admin/analytics/users/trends', {
+        params,
+      });
 
       if (response.data.code === 200) {
         return {
@@ -141,12 +135,9 @@ export const dashboardService = {
       if (authorId) params.authorId = authorId;
       if (status !== null) params.status = status;
 
-      const response = await api.get(
-        '/admin/analytics/novels/trends',
-        {
-          params,
-        }
-      );
+      const response = await api.get('/admin/analytics/novels/trends', {
+        params,
+      });
 
       if (response.data.code === 200) {
         return {
@@ -173,12 +164,9 @@ export const dashboardService = {
       if (startDate) params.startDate = startDate;
       if (endDate) params.endDate = endDate;
 
-      const response = await api.get(
-        '/admin/analytics/reading/activity',
-        {
-          params,
-        }
-      );
+      const response = await api.get('/admin/analytics/reading/activity', {
+        params,
+      });
 
       if (response.data.code === 200) {
         return {
@@ -199,12 +187,9 @@ export const dashboardService = {
   // Get top content
   getTopContent: async (limit = 10) => {
     try {
-      const response = await api.get(
-        '/admin/analytics/platform/top-content',
-        {
-          params: { limit },
-        }
-      );
+      const response = await api.get('/admin/analytics/platform/top-content', {
+        params: { limit },
+      });
 
       if (response.data.code === 200) {
         return {
@@ -227,12 +212,9 @@ export const dashboardService = {
       if (date) params.date = date;
       else params.date = new Date().toISOString().split('T')[0];
 
-      const response = await api.get(
-        '/admin/analytics/platform/dau',
-        {
-          params,
-        }
-      );
+      const response = await api.get('/admin/analytics/platform/dau', {
+        params,
+      });
 
       if (response.data.code === 200) {
         return {

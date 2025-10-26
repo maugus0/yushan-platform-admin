@@ -131,7 +131,11 @@ export const getDateRange = (period) => {
 
     case 'week': {
       const startOfWeek = new Date(today);
-      startOfWeek.setDate(today.getDate() - today.getDay() + 1); // Monday
+      // getDay() returns 0 for Sunday, 1 for Monday, etc.
+      // To get Monday, we need: if Sunday (0), go back 6 days; otherwise go back (day-1) days
+      const day = today.getDay();
+      const daysToMonday = day === 0 ? -6 : 1 - day;
+      startOfWeek.setDate(today.getDate() + daysToMonday);
       const endOfWeek = new Date(startOfWeek);
       endOfWeek.setDate(startOfWeek.getDate() + 6);
       return [startOfWeek, endOfWeek];
@@ -139,7 +143,9 @@ export const getDateRange = (period) => {
 
     case 'last_week': {
       const lastWeekStart = new Date(today);
-      lastWeekStart.setDate(today.getDate() - today.getDay() - 6);
+      const day = today.getDay();
+      const daysToLastMonday = day === 0 ? -13 : 1 - day - 7;
+      lastWeekStart.setDate(today.getDate() + daysToLastMonday);
       const lastWeekEnd = new Date(lastWeekStart);
       lastWeekEnd.setDate(lastWeekStart.getDate() + 6);
       return [lastWeekStart, lastWeekEnd];
