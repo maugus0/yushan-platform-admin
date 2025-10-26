@@ -1,16 +1,10 @@
 import api from './api';
 
-const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL ||
-  'https://yushan-backend-staging.up.railway.app/api';
-
 export const dashboardService = {
   // Get main dashboard statistics from platform overview
   getDashboardStats: async () => {
     try {
-      const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/platform/overview`
-      );
+      const response = await api.get('/admin/analytics/platform/overview');
 
       if (response.data.code === 200) {
         const data = response.data.data;
@@ -80,7 +74,7 @@ export const dashboardService = {
   getAnalyticsSummary: async (period = 'daily') => {
     try {
       const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/summary`,
+        '/admin/analytics/summary',
         {
           params: { period },
         }
@@ -110,7 +104,7 @@ export const dashboardService = {
       if (endDate) params.endDate = endDate;
 
       const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/users/trends`,
+        '/admin/analytics/users/trends',
         {
           params,
         }
@@ -148,7 +142,7 @@ export const dashboardService = {
       if (status !== null) params.status = status;
 
       const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/novels/trends`,
+        '/admin/analytics/novels/trends',
         {
           params,
         }
@@ -180,7 +174,7 @@ export const dashboardService = {
       if (endDate) params.endDate = endDate;
 
       const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/reading/activity`,
+        '/admin/analytics/reading/activity',
         {
           params,
         }
@@ -206,7 +200,7 @@ export const dashboardService = {
   getTopContent: async (limit = 10) => {
     try {
       const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/platform/top-content`,
+        '/admin/analytics/platform/top-content',
         {
           params: { limit },
         }
@@ -234,7 +228,7 @@ export const dashboardService = {
       else params.date = new Date().toISOString().split('T')[0];
 
       const response = await api.get(
-        `${API_BASE_URL}/admin/analytics/platform/dau`,
+        '/admin/analytics/platform/dau',
         {
           params,
         }

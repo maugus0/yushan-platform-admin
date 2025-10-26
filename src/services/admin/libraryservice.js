@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://yushan-backend-staging.up.railway.app/api';
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL ||
+  'https://yushan.duckdns.org/api/v1';
 
 // Create an axios instance for external API calls
 const externalApi = axios.create({

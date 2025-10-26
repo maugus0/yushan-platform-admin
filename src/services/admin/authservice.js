@@ -8,7 +8,7 @@ const getApiBaseUrl = () => {
   }
 
   // Default to staging backend for all environments
-  return 'https://yushan-backend-staging.up.railway.app/api';
+  return 'https://yushan.duckdns.org/api/v1';
 };
 
 const API_BASE_URL = getApiBaseUrl();
@@ -85,8 +85,7 @@ const authService = {
         localStorage.setItem('accessToken', userData.accessToken);
         localStorage.setItem('refreshToken', userData.refreshToken);
         localStorage.setItem('tokenType', userData.tokenType);
-        localStorage.setItem('expiresIn', userData.expiresIn.toString());
-
+        
         // Store user info (excluding sensitive data)
         const adminUser = {
           uuid: userData.uuid,
@@ -97,7 +96,6 @@ const authService = {
           role: userData.isAdmin ? 'admin' : 'user',
           isAdmin: userData.isAdmin,
           isAuthor: userData.isAuthor,
-          level: userData.level,
           status: userData.status,
           lastActive: userData.lastActive,
           createTime: userData.createTime,
@@ -157,7 +155,6 @@ const authService = {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('tokenType');
-    localStorage.removeItem('expiresIn');
     localStorage.removeItem('admin_user');
     localStorage.removeItem('admin_token');
     localStorage.removeItem('admin_remember');
@@ -189,8 +186,7 @@ const authService = {
         // Update stored tokens
         localStorage.setItem('accessToken', tokenData.accessToken);
         localStorage.setItem('refreshToken', tokenData.refreshToken);
-        localStorage.setItem('expiresIn', tokenData.expiresIn.toString());
-
+        
         // Set up next refresh
         authService.setupTokenRefresh(tokenData.expiresIn);
 
@@ -212,27 +208,25 @@ const authService = {
   },
 
   // Set up automatic token refresh
-  setupTokenRefresh: (expiresIn) => {
+  setupTokenRefresh: (_expiresIn) => {
     // Clear existing timer
     if (authService.refreshTimer) {
       clearTimeout(authService.refreshTimer);
     }
 
-    // Set up refresh 1 minute before expiration
-    const refreshTime = (expiresIn - 60) * 1000; // Convert to milliseconds and subtract 60 seconds
+    // Refresh every 15 minutes (900000 ms)
+    const REFRESH_INTERVAL = 15 * 60 * 1000; // 15 minutes in milliseconds
 
-    if (refreshTime > 0) {
-      authService.refreshTimer = setTimeout(async () => {
-        try {
-          await authService.refreshToken();
-        } catch (error) {
-          console.error('Automatic token refresh failed:', error);
-          // Force logout on refresh failure
-          authService.logout();
-          window.location.href = '/admin/login';
-        }
-      }, refreshTime);
-    }
+    authService.refreshTimer = setTimeout(async () => {
+      try {
+        await authService.refreshToken();
+      } catch (error) {
+        console.error('Automatic token refresh failed:', error);
+        // Force logout on refresh failure
+        authService.logout();
+        window.location.href = '/admin/login';
+      }
+    }, REFRESH_INTERVAL);
   },
 
   // Get current user from storage
@@ -256,29 +250,13 @@ const authService = {
   // Initialize auth state on app start
   initializeAuth: async () => {
     const token = localStorage.getItem('accessToken');
-    const expiresIn = localStorage.getItem('expiresIn');
+    const user = authService.getCurrentUser();
 
-    if (token && expiresIn) {
-      const expirationTime = parseInt(expiresIn, 10);
-      const currentTime = Math.floor(Date.now() / 1000);
-
-      // Check if token is still valid
-      if (currentTime < expirationTime) {
-        // Set up refresh timer
-        const remainingTime = expirationTime - currentTime;
-        authService.setupTokenRefresh(remainingTime);
-        return true;
-      } else {
-        // Token expired, try to refresh
-        try {
-          await authService.refreshToken();
-          return true;
-        } catch (error) {
-          // Refresh failed, clear auth data
-          authService.logout();
-          return false;
-        }
-      }
+    if (token && user) {
+      // Token exists and user is authenticated, set up refresh timer
+      // Refresh interval is handled by setupTokenRefresh (every 15 minutes)
+      authService.setupTokenRefresh(0); // expiresIn parameter is ignored now
+      return true;
     }
 
     return false;

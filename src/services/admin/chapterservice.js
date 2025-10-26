@@ -4,6 +4,14 @@ const getAuthToken = () => {
   return localStorage.getItem('accessToken');
 };
 
+// Get API base URL from environment or use default
+const getApiBaseUrl = () => {
+  return (
+    process.env.REACT_APP_API_BASE_URL ||
+    'https://yushan.duckdns.org/api/v1'
+  );
+};
+
 export const chapterService = {
   // Get chapters by novel ID (real API)
   getChaptersByNovel: async (novelId, params = {}) => {
@@ -11,7 +19,7 @@ export const chapterService = {
       const token = getAuthToken();
       const { page = 1, pageSize = 20, publishedOnly = true } = params;
 
-      const url = `https://yushan-backend-staging.up.railway.app/api/chapters/novel/${novelId}?page=${page}&pageSize=${pageSize}&publishedOnly=${publishedOnly}`;
+      const url = `${getApiBaseUrl()}/chapters/novel/${novelId}?page=${page}&pageSize=${pageSize}&publishedOnly=${publishedOnly}`;
       const res = await fetch(url, {
         method: 'GET',
         headers: {
@@ -54,7 +62,7 @@ export const chapterService = {
   deleteChapter: async (uuid) => {
     try {
       const token = getAuthToken();
-      const url = `https://yushan-backend-staging.up.railway.app/api/chapters/admin/${uuid}`;
+      const url = `${getApiBaseUrl()}/chapters/admin/${uuid}`;
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {
@@ -79,7 +87,7 @@ export const chapterService = {
   deleteChaptersByNovel: async (novelId) => {
     try {
       const token = getAuthToken();
-      const url = `https://yushan-backend-staging.up.railway.app/api/chapters/admin/novel/${novelId}`;
+      const url = `${getApiBaseUrl()}/chapters/admin/novel/${novelId}`;
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {

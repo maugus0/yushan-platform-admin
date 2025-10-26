@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 // Configure axios with base URL and interceptors
-const API_BASE_URL = 'https://yushan-backend-staging.up.railway.app/api';
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL ||
+  'https://yushan.duckdns.org/api/v1';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -217,6 +219,29 @@ const getGenderDisplayText = (gender) => {
     undefined: 'Not specified',
   };
   return genderMap[gender] || 'Not specified';
+};
+
+// Helper function to resolve avatar URL
+const getAvatarUrl = (avatarFileName) => {
+  if (!avatarFileName) {
+    // Default avatar
+    return require('../../assets/images/user.png');
+  }
+
+  // If it's already a full URL or path, return as-is
+  if (avatarFileName.startsWith('http') || avatarFileName.startsWith('/')) {
+    return avatarFileName;
+  }
+
+  // Map common avatar filenames
+  const avatarMap = {
+    'user_male.png': require('../../assets/images/user_male.png'),
+    'user_female.png': require('../../assets/images/user_female.png'),
+    'user.png': require('../../assets/images/user.png'),
+    'user_default.png': require('../../assets/images/user.png'),
+  };
+
+  return avatarMap[avatarFileName] || require('../../assets/images/user.png');
 };
 
 // Mock data for development
@@ -651,6 +676,7 @@ userService.getUserProfile = getUserProfile;
 userService.getUserProfileByUsername = getUserProfileByUsername;
 userService.getUserStatusColor = getUserStatusColor;
 userService.getGenderDisplayText = getGenderDisplayText;
+userService.getAvatarUrl = getAvatarUrl;
 
 // Export all functions
 export {
@@ -659,6 +685,7 @@ export {
   getUserProfileByUsername,
   getUserStatusColor,
   getGenderDisplayText,
+  getAvatarUrl,
 };
 
 export default userService;

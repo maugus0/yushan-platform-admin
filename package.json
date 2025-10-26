@@ -8,7 +8,6 @@
     "url": "https://github.com/maugus0/yushan-platform-admin.git"
   },
   "homepage": "https://maugus0.github.io/yushan-platform-admin",
-  "proxy": "https://yushan-backend-staging.up.railway.app",
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
     "@testing-library/dom": "^10.4.1",
@@ -22,7 +21,8 @@
     "react-scripts": "^5.0.1",
     "recharts": "^2.12.7",
     "web-vitals": "^2.1.4",
-    "zustand": "^4.5.5"
+    "zustand": "^4.5.5",
+    "http-proxy-middleware": "^2.0.6"
   },
   "scripts": {
     "start": "NODE_OPTIONS='--no-deprecation' react-scripts start",

@@ -22,6 +22,7 @@ import {
   getCurrentUserProfile,
   getGenderDisplayText,
   getUserStatusColor,
+  getAvatarUrl,
 } from '../../../services/admin/userservice';
 import { useAdminAuth } from '../../../contexts/admin/adminauthcontext';
 import userProfileCover from '../../../assets/images/userprofilecover.png';
@@ -126,7 +127,7 @@ const AdminProfile = () => {
           >
             <Avatar
               size={isMobile ? 80 : 120}
-              src={profile.avatar || profile.avatarUrl}
+              src={getAvatarUrl(profile.avatar || profile.avatarUrl)}
               icon={<UserOutlined />}
               style={{
                 backgroundColor: '#1890ff',
