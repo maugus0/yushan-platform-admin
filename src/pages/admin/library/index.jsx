@@ -30,6 +30,7 @@ import ViewModal, {
   viewFieldTypes,
 } from '../../../components/admin/modals/viewmodal';
 import { libraryService } from '../../../services/admin/libraryservice';
+import { getAvatarUrl } from '../../../services/admin/userservice';
 import {
   exportToCSV,
   getTimestampedFilename,
@@ -151,7 +152,7 @@ const Library = () => {
             <Space>
               <Avatar
                 size="large"
-                src={record.avatarUrl}
+                src={getAvatarUrl(record.avatarUrl)}
                 icon={<UserOutlined />}
                 style={{ minWidth: 40 }}
               />
@@ -393,7 +394,7 @@ Note: This is a basic summary. Full analytics dashboard would be implemented her
         <Space style={{ marginBottom: 12, width: '100%' }}>
           <Avatar
             size="large"
-            src={user.avatarUrl}
+            src={getAvatarUrl(user.avatarUrl)}
             icon={<UserOutlined />}
             style={{ minWidth: 48, minHeight: 48 }}
           />

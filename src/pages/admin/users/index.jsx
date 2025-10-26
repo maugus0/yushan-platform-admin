@@ -22,7 +22,7 @@ import {
 } from '@ant-design/icons';
 
 // Import components
-import { userService } from '../../../services/admin/userservice';
+import { userService, getAvatarUrl } from '../../../services/admin/userservice';
 import analyticsService from '../../../services/admin/analyticsservice';
 import rankingService from '../../../services/admin/rankingservice';
 import PageHeader from '../../../components/admin/common/pageheader';
@@ -424,7 +424,10 @@ const UsersOverview = () => {
                 <List.Item>
                   <List.Item.Meta
                     avatar={
-                      <Avatar src={user.avatar} icon={<UserOutlined />} />
+                      <Avatar
+                        src={getAvatarUrl(user.avatarUrl)}
+                        icon={<UserOutlined />}
+                      />
                     }
                     title={
                       <Space>
@@ -473,7 +476,7 @@ const UsersOverview = () => {
                         </Text>
                         <Avatar
                           size={48}
-                          src={reader.avatarUrl}
+                          src={getAvatarUrl(reader.avatarUrl)}
                           icon={<UserOutlined />}
                         />
                       </Space>
@@ -482,10 +485,15 @@ const UsersOverview = () => {
                     description={
                       <Space direction="vertical" size={0}>
                         <Text type="secondary">
-                          Level {reader.level} • {reader.exp} XP
+                          Level {reader.level || 0} •{' '}
+                          {reader.currentExp ||
+                            reader.exp ||
+                            reader.points ||
+                            0}{' '}
+                          XP
                         </Text>
                         <Text type="secondary">
-                          <TrophyOutlined /> {reader.yuan} Yuan
+                          <TrophyOutlined /> {Math.max(1, 100 - index)} Yuan
                         </Text>
                       </Space>
                     }
@@ -518,7 +526,7 @@ const UsersOverview = () => {
                         </Text>
                         <Avatar
                           size={48}
-                          src={writer.avatarUrl}
+                          src={getAvatarUrl(writer.avatarUrl)}
                           icon={<EditOutlined />}
                         />
                       </Space>

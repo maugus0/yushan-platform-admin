@@ -31,26 +31,35 @@ export const chapterService = {
         throw new Error(result.message || 'Failed to fetch chapters');
 
       // Map BE response to FE format
-      const chapters = (result.data.chapters || []).map((ch) => ({
-        id: ch.chapterId,
+      // Handle both old and new response structures
+      const content = result.data.content || result.data.chapters || [];
+      const chapters = content.map((ch) => ({
+        id: ch.id || ch.chapterId,
         uuid: ch.uuid,
         chapterNumber: ch.chapterNumber,
         title: ch.title,
-        contentPreview: ch.contentPreview,
+        contentPreview: ch.preview || ch.contentPreview,
         wordCount: ch.wordCnt,
         isPremium: ch.isPremium,
         yuanCost: ch.yuanCost,
         views: ch.viewCnt,
         publishedAt: ch.publishTime,
+        isValid: ch.isValid,
+        createTime: ch.createTime,
+        updateTime: ch.updateTime,
       }));
 
       return {
         success: true,
         data: chapters,
-        total: result.data.totalCount,
-        page: result.data.currentPage,
-        pageSize: result.data.pageSize,
-        totalPages: result.data.totalPages,
+        total:
+          result.data.totalElements ||
+          result.data.totalCount ||
+          chapters.length,
+        page: result.data.currentPage || page,
+        pageSize: result.data.size || result.data.pageSize || pageSize,
+        totalPages:
+          result.data.totalPages || Math.ceil(chapters.length / pageSize),
       };
     } catch (error) {
       throw new Error(error.message || 'Failed to fetch chapters by novel');

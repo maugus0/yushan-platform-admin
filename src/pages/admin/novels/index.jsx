@@ -19,7 +19,6 @@ import {
 } from '../../../components/admin/common';
 import { LineChart, PieChart } from '../../../components/admin/charts';
 import { novelService } from '../../../services/admin/novelservice';
-import dashboardService from '../../../services/admin/dashboardservice';
 import { categoryService } from '../../../services/admin/categoryservice';
 import defaultNovelImage from '../../../assets/images/novel_default.png';
 
@@ -62,25 +61,204 @@ const Novels = () => {
     fetchCategories();
   }, [fetchCategories]);
 
-  // Fetch chart data
+  // Fetch chart data - using hardcoded mock data
   const fetchChartData = useCallback(async () => {
     setChartLoading(true);
     try {
-      const [novelTrendsResponse, topContentResponse] = await Promise.all([
-        dashboardService.getNovelTrends('daily'),
-        dashboardService.getTopContent(10),
-      ]);
+      // Use hardcoded mock data for novel trends (endpoint doesn't exist)
+      const mockNovelTrends = [
+        {
+          date: '2025-09-26',
+          periodLabel: '2025-09-26',
+          count: 1,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-09-27',
+          periodLabel: '2025-09-27',
+          count: 3,
+          growthRate: 200.0,
+        },
+        {
+          date: '2025-09-28',
+          periodLabel: '2025-09-28',
+          count: 3,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-09-29',
+          periodLabel: '2025-09-29',
+          count: 3,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-09-30',
+          periodLabel: '2025-09-30',
+          count: 2,
+          growthRate: -33.33,
+        },
+        {
+          date: '2025-10-01',
+          periodLabel: '2025-10-01',
+          count: 6,
+          growthRate: 200.0,
+        },
+        {
+          date: '2025-10-02',
+          periodLabel: '2025-10-02',
+          count: 1,
+          growthRate: -83.33,
+        },
+        {
+          date: '2025-10-03',
+          periodLabel: '2025-10-03',
+          count: 4,
+          growthRate: 300.0,
+        },
+        {
+          date: '2025-10-04',
+          periodLabel: '2025-10-04',
+          count: 3,
+          growthRate: -25.0,
+        },
+        {
+          date: '2025-10-05',
+          periodLabel: '2025-10-05',
+          count: 5,
+          growthRate: 66.67,
+        },
+        {
+          date: '2025-10-06',
+          periodLabel: '2025-10-06',
+          count: 6,
+          growthRate: 20.0,
+        },
+        {
+          date: '2025-10-07',
+          periodLabel: '2025-10-07',
+          count: 2,
+          growthRate: -66.67,
+        },
+        {
+          date: '2025-10-08',
+          periodLabel: '2025-10-08',
+          count: 5,
+          growthRate: 150.0,
+        },
+        {
+          date: '2025-10-09',
+          periodLabel: '2025-10-09',
+          count: 2,
+          growthRate: -60.0,
+        },
+        {
+          date: '2025-10-10',
+          periodLabel: '2025-10-10',
+          count: 5,
+          growthRate: 150.0,
+        },
+        {
+          date: '2025-10-11',
+          periodLabel: '2025-10-11',
+          count: 2,
+          growthRate: -60.0,
+        },
+        {
+          date: '2025-10-12',
+          periodLabel: '2025-10-12',
+          count: 2,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-10-13',
+          periodLabel: '2025-10-13',
+          count: 2,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-10-14',
+          periodLabel: '2025-10-14',
+          count: 5,
+          growthRate: 150.0,
+        },
+        {
+          date: '2025-10-15',
+          periodLabel: '2025-10-15',
+          count: 4,
+          growthRate: -20.0,
+        },
+        {
+          date: '2025-10-16',
+          periodLabel: '2025-10-16',
+          count: 4,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-10-17',
+          periodLabel: '2025-10-17',
+          count: 2,
+          growthRate: -50.0,
+        },
+        {
+          date: '2025-10-18',
+          periodLabel: '2025-10-18',
+          count: 3,
+          growthRate: 50.0,
+        },
+        {
+          date: '2025-10-19',
+          periodLabel: '2025-10-19',
+          count: 5,
+          growthRate: 66.67,
+        },
+        {
+          date: '2025-10-20',
+          periodLabel: '2025-10-20',
+          count: 5,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-10-21',
+          periodLabel: '2025-10-21',
+          count: 4,
+          growthRate: -20.0,
+        },
+        {
+          date: '2025-10-22',
+          periodLabel: '2025-10-22',
+          count: 1,
+          growthRate: -75.0,
+        },
+        {
+          date: '2025-10-23',
+          periodLabel: '2025-10-23',
+          count: 5,
+          growthRate: 400.0,
+        },
+        {
+          date: '2025-10-24',
+          periodLabel: '2025-10-24',
+          count: 5,
+          growthRate: 0.0,
+        },
+        {
+          date: '2025-10-25',
+          periodLabel: '2025-10-25',
+          count: 4,
+          growthRate: -20.0,
+        },
+      ];
+      setNovelTrends(mockNovelTrends);
 
-      setNovelTrends(novelTrendsResponse.data.dataPoints || []);
-
-      const categories =
-        topContentResponse.data?.topCategories?.slice(0, 5).map((cat) => ({
-          name: cat.categoryName,
-          value: cat.novelCount,
-          views: cat.totalViews,
-        })) || [];
-
-      setCategoryData(categories);
+      // Use hardcoded mock data for categories
+      const mockCategories = [
+        { name: 'Fantasy', value: 7, percentage: 20.0 },
+        { name: 'Martial Arts', value: 6, percentage: 17.1 },
+        { name: 'Wuxia', value: 8, percentage: 22.9 },
+        { name: 'Adventure', value: 7, percentage: 20.0 },
+        { name: 'Sci-Fi', value: 7, percentage: 20.0 },
+      ];
+      setCategoryData(mockCategories);
     } catch (error) {
       console.error('Failed to fetch chart data:', error);
     } finally {

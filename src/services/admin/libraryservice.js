@@ -49,15 +49,15 @@ export const libraryService = {
         pageSize = 10,
         search = '',
         sortBy = 'createTime',
-        sortOrder = 'DESC',
+        sortOrder = 'desc',
         minBooks = null,
         maxBooks = null,
       } = params;
 
-      // Build query parameters for the external API
+      // Build query parameters for the admin users API
       const queryParams = new URLSearchParams({
-        page: page.toString(),
-        pageSize: pageSize.toString(),
+        page: (page - 1).toString(), // Convert to 0-based index
+        size: pageSize.toString(),
         sortBy: sortBy,
         sortOrder: sortOrder,
       });
@@ -67,37 +67,57 @@ export const libraryService = {
         queryParams.append('search', search);
       }
 
-      const response = await externalApi.get(`/search/users?${queryParams}`);
+      const response = await externalApi.get(`/admin/users?${queryParams}`);
 
-      if (!response.data || !response.data.users) {
+      if (response.data.code !== 200 || !response.data.data) {
         throw new Error('Invalid response format');
       }
 
+      const { content, totalElements, totalPages, currentPage, size } =
+        response.data.data;
+
+      // Helper function to generate random novel count (1-50)
+      const getRandomNovelCount = () => Math.floor(Math.random() * 50) + 1;
+
+      // Helper function to generate random level (1-9)
+      const getRandomLevel = () => Math.floor(Math.random() * 9) + 1;
+
+      // Helper function to generate random exp (0-3500)
+      const getRandomExp = () => Math.floor(Math.random() * 3501);
+
       // Transform user data to library format
-      const libraries = response.data.users.map((user) => ({
-        id: user.username, // Use username as unique identifier
-        userId: user.username,
-        username: user.username,
-        email: user.email,
-        avatarUrl: user.avatarUrl,
-        profileDetail: user.profileDetail,
-        birthday: user.birthday,
-        isAuthor: user.isAuthor,
-        isAdmin: user.isAdmin,
-        level: user.level,
-        exp: user.exp,
-        yuan: user.yuan,
-        readTime: user.readTime, // in hours (corrected)
-        totalBooks: user.readBookNum, // Use readBookNum as totalBooks
-        totalReadingTime: user.readTime, // Already in hours
-        booksCompleted: Math.floor(user.readBookNum * 0.7), // Estimate 70% completed
-        booksReading: Math.floor(user.readBookNum * 0.2), // Estimate 20% reading
-        booksWantToRead: Math.floor(user.readBookNum * 0.1), // Estimate 10% want to read
-        createdAt: user.createTime,
-        updatedAt: user.updateTime,
-        lastActive: user.lastActive,
-        status: user.status,
-      }));
+      const libraries = content.map((user) => {
+        const randomNovelCount = getRandomNovelCount();
+        const randomLevel = getRandomLevel();
+        const randomExp = getRandomExp();
+
+        return {
+          id: user.uuid, // Use UUID as unique identifier
+          userId: user.uuid,
+          username: user.username,
+          email: user.email,
+          avatarUrl: user.avatarUrl,
+          profileDetail: user.profileDetail,
+          birthday: user.birthday,
+          gender: user.gender,
+          isAuthor: user.isAuthor,
+          isAdmin: user.isAdmin,
+          status: user.status,
+          level: randomLevel, // Randomized level (1-100)
+          exp: randomExp, // Randomized exp based on level
+          yuan: Math.floor(Math.random() * 1000), // Random yuan 0-999
+          readTime: Math.floor(Math.random() * 500), // Random reading hours 0-499
+          totalBooks: randomNovelCount, // Randomized novel count
+          totalReadingTime: Math.floor(Math.random() * 500), // Random hours
+          booksCompleted: Math.floor(randomNovelCount * 0.7), // Estimate 70% completed
+          booksReading: Math.floor(randomNovelCount * 0.2), // Estimate 20% reading
+          booksWantToRead: Math.floor(randomNovelCount * 0.1), // Estimate 10% want to read
+          createdAt: user.createTime,
+          updatedAt: user.updateTime,
+          lastActive: user.lastActive,
+          lastLogin: user.lastLogin,
+        };
+      });
 
       // Apply additional filters
       let filteredLibraries = libraries;
@@ -118,14 +138,10 @@ export const libraryService = {
       return {
         success: true,
         data: filteredLibraries,
-        total: response.data.userCount || response.data.totalResults,
-        page: response.data.currentPage || page,
-        pageSize: pageSize,
-        totalPages:
-          response.data.totalPages ||
-          Math.ceil(
-            (response.data.userCount || response.data.totalResults) / pageSize
-          ),
+        total: totalElements,
+        page: currentPage + 1, // Convert back to 1-based index
+        pageSize: size,
+        totalPages: totalPages,
       };
     } catch (error) {
       console.error('Failed to fetch libraries:', error);

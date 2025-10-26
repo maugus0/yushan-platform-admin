@@ -138,8 +138,24 @@ const AdminLayout = () => {
     if (notification === 'view-all') {
       navigate('/admin/notifications');
     } else {
-      // Handle individual notification click
-      // TODO: Add notification handling logic
+      // Handle individual notification click based on type
+      switch (notification.type) {
+        case 'user':
+          navigate('/admin/users');
+          break;
+        case 'novel':
+          navigate('/admin/novels');
+          break;
+        case 'report':
+        case 'comment':
+          navigate('/admin/comments');
+          break;
+        case 'review':
+          navigate('/admin/reviews');
+          break;
+        default:
+          break;
+      }
     }
   };
 

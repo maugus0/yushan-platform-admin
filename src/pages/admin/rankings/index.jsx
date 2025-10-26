@@ -33,12 +33,11 @@ import {
 } from '../../../components/admin/common';
 import { rankingService } from '../../../services/admin/rankingservice';
 import { logApiError } from '../../../utils/admin/errorReporting';
+import { getAvatarUrl } from '../../../services/admin/userservice';
 
 // Import default images from assets
 import novelDefaultImg from '../../../assets/images/novel_default.png';
 import userDefaultImg from '../../../assets/images/user.png';
-import userMaleImg from '../../../assets/images/user_male.png';
-import userFemaleImg from '../../../assets/images/user_female.png';
 
 const { Text } = Typography;
 
@@ -78,34 +77,8 @@ const Rankings = () => {
 
   // Helper function to get user avatar with fallbacks
   const getUserAvatar = (record) => {
-    const { avatarUrl, gender } = record;
-
-    // If avatarUrl exists and is not null
-    if (avatarUrl) {
-      // Check if it's a base64 image
-      if (avatarUrl.startsWith('data:image/')) {
-        return avatarUrl;
-      }
-      // Check if it's a hardcoded image name
-      if (
-        avatarUrl.includes('user.png') ||
-        avatarUrl.includes('user_male.png') ||
-        avatarUrl.includes('user_female.png')
-      ) {
-        return `/images/${avatarUrl}`;
-      }
-      // If it's some other URL, try to use it
-      return avatarUrl;
-    }
-
-    // Fallback based on gender using imported images
-    if (gender === 'male') {
-      return userMaleImg;
-    } else if (gender === 'female') {
-      return userFemaleImg;
-    } else {
-      return userDefaultImg;
-    }
+    // Use the centralized getAvatarUrl function from userService
+    return getAvatarUrl(record.avatarUrl);
   };
 
   // Helper function to get novel cover with fallback
@@ -132,79 +105,6 @@ const Rankings = () => {
       // If even the fallback fails, use a data URL or remove the image
       e.target.style.display = 'none';
     }
-  };
-
-  // Helper component for robust image display with loading state
-  const RobustImage = ({
-    src,
-    alt,
-    style,
-    onError,
-    fallbackSrc = novelDefaultImg,
-    ...props
-  }) => {
-    const [loading, setLoading] = useState(true);
-    const [currentSrc, setCurrentSrc] = useState(src);
-    const [hasFailed, setHasFailed] = useState(false);
-
-    const handleLoad = () => {
-      setLoading(false);
-    };
-
-    const handleErrorInternal = (e) => {
-      setLoading(false);
-
-      // If we haven't failed yet and we're not already using the fallback
-      if (!hasFailed && currentSrc !== fallbackSrc) {
-        setHasFailed(true);
-        setCurrentSrc(fallbackSrc);
-      } else {
-        // If even the fallback fails, hide the image
-        e.target.style.display = 'none';
-      }
-
-      if (onError) {
-        onError(e);
-      }
-    };
-
-    // Reset state when src changes
-    useEffect(() => {
-      setCurrentSrc(src);
-      setLoading(true);
-      setHasFailed(false);
-    }, [src]);
-
-    return (
-      <div style={{ position: 'relative', display: 'inline-block' }}>
-        {loading && (
-          <div
-            style={{
-              ...style,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#f0f0f0',
-              color: '#999',
-              fontSize: isMobile ? '10px' : '12px',
-            }}
-          >
-            ...
-          </div>
-        )}
-        <img
-          src={currentSrc}
-          alt={alt}
-          style={{
-            ...style,
-            display: loading ? 'none' : 'block',
-          }}
-          onLoad={handleLoad}
-          onError={handleErrorInternal}
-          {...props}
-        />
-      </div>
-    );
   };
 
   // Fetch data
@@ -392,17 +292,14 @@ const Rankings = () => {
           render: (_, record) => (
             <Space direction="vertical" size={4} style={{ width: '100%' }}>
               <Space wrap size={[4, 2]}>
-                <RobustImage
+                <Avatar
+                  shape="square"
+                  size={isMobile ? 50 : 60}
                   src={getNovelCover(record.coverImgUrl)}
-                  alt={record.title}
+                  icon={<BookOutlined />}
                   style={{
-                    width: isMobile ? '40px' : '50px',
-                    height: isMobile ? '60px' : '75px',
-                    objectFit: 'cover',
-                    borderRadius: '4px',
                     border: '1px solid #d9d9d9',
                   }}
-                  fallbackSrc={novelDefaultImg}
                 />
                 <Space direction="vertical" size={2} style={{ flex: 1 }}>
                   <Text strong style={{ fontSize: isMobile ? '13px' : '15px' }}>
@@ -550,7 +447,7 @@ const Rankings = () => {
             <Space direction="vertical" size={4} style={{ width: '100%' }}>
               <Space wrap size={[4, 2]}>
                 <Text style={{ fontSize: isMobile ? '11px' : '14px' }}>
-                  EXP: {safeFormat(record.exp)}
+                  EXP: {safeFormat(record.currentExp || record.exp)}
                 </Text>
               </Space>
               {record.readTime && (
@@ -607,12 +504,12 @@ const Rankings = () => {
             isInTop100: true,
             rank: rankData.rank,
             score: rankData.score,
-            rankType: rankData.rankType,
+            rankType: rankData.rankingType || rankData.rankType, // Support both field names
             message: response.message,
           });
 
           message.success(
-            `Novel is ranked #${rankData.rank} in ${rankData.rankType}!`
+            `Novel is ranked #${rankData.rank} in ${rankData.rankingType || rankData.rankType}!`
           );
         } else {
           // When novel is not in rankings, response.data is null
